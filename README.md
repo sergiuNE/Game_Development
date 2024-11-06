@@ -1,4 +1,4 @@
-🧛 Castle of Shadows 
+🧛 **Castle of Shadows**
 
 **Castle of Shadows** is a thrilling action-adventure game where you take on the role of a vampire, fighting for survival in a dark and eerie castle 🏰. As the last of your kind, you must defend your home from the relentless Van Helsing family, a notorious group of vampire hunters. Your mission is to eliminate each member of the Van Helsing clan, using your vampiric abilities and cunning to outsmart and overpower them. 
 
