@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/MenuFont.spritefont</SourceFile>
-  <SourceTime>2024-11-06T19:28:53.8173234+01:00</SourceTime>
+  <SourceTime>2024-11-07T15:30:28.3912433+01:00</SourceTime>
   <DestFile>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/bin/DesktopGL/Content/MenuFont.xnb</DestFile>
-  <DestTime>2024-11-06T19:28:55.132977+01:00</DestTime>
+  <DestTime>2024-11-07T15:45:10.3641515+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T13:44:56+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

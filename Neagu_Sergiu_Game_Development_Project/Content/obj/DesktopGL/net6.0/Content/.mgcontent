@@ -5,11 +5,47 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/background.jpeg</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle_spritesheet_2.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle_spritesheet_3.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle_spritesheets_1.png</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle.mp3</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/GameNameFont.spritefont</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/idle_vampire_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/idle_vampire_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/LevelFont.spritefont</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/MenuFont.spritefont</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_attack_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_attack_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_die_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_die_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_hurt_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_hurt_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_jump_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_jump_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_run_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/vampire_run_right.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/walk_vampire_left.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/walk_vampire_right.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

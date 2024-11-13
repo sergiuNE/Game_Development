@@ -1,69 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\content\\gamenamefont.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\content\\gamenamefont.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\content\\menufont.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\content\\menufont.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GameNameFont.spritefont",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Content\\GameNameFont.spritefont",
-              "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Content\\GameNameFont.spritefont",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Content\\GameNameFont.spritefont",
-              "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Content\\GameNameFont.spritefont",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACUAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-11-06T18:45:00.566Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MenuFont.spritefont",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Content\\MenuFont.spritefont",
-              "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Content\\MenuFont.spritefont",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Content\\MenuFont.spritefont",
-              "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Content\\MenuFont.spritefont",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-11-06T18:44:58.509Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Game1.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T18:17:07.257Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
