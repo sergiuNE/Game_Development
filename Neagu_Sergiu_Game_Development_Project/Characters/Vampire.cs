@@ -12,15 +12,28 @@ public class Vampire
     public Vector2 Position;
     public Vector2 PreviousPosition; // Added for collision handling
     private bool _isFacingRight;
-    private float _speed = 4.5f;
+    private float _speed = 2.8f; //4.5f
     private int uniformWidth = 64;  // Uniform width of the sprite
     private int uniformHeight = 64; // Uniform height of the sprite
 
-    // Constructor to initialize the vampire's position
+    public Rectangle CurrentHitbox
+    {
+        get
+        {
+            var frameHitbox = _currentAnimation.GetCurrentHitbox();
+            return new Rectangle(
+                (int)(Position.X + frameHitbox.X),
+                (int)(Position.Y + frameHitbox.Y),
+                frameHitbox.Width,
+                frameHitbox.Height
+            );
+        }
+    }
+
     public Vampire(Vector2 initialPosition)
     {
         Position = initialPosition;
-        PreviousPosition = initialPosition; // Initialize PreviousPosition
+        PreviousPosition = initialPosition; 
         _isFacingRight = true;
     }
 
@@ -69,6 +82,7 @@ public class Vampire
             Position = new Vector2(Position.X, Position.Y + _speed);
     }
 
+
     public bool IsMovingVertically(KeyboardState keyboardState)
     {
         return keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.Down);
@@ -106,11 +120,11 @@ public class Vampire
         }
     }
 
-    public Rectangle BoundingBox
+    /*public Rectangle BoundingBox
     {
         get { return new Rectangle((int)Position.X, (int)Position.Y, uniformWidth, uniformHeight); }
-    }
-
+    }*/
+    
     public void Draw(SpriteBatch spriteBatch)
     {
         var destRectangle = new Rectangle(
@@ -119,5 +133,10 @@ public class Vampire
         );
 
         spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
+    }
+
+    public bool CheckCollision(Rectangle other)
+    {
+        return CurrentHitbox.Intersects(other);
     }
 }

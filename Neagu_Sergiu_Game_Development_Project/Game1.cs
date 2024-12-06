@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
 using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 
 namespace Neagu_Sergiu_Game_Development_Project
@@ -49,7 +50,11 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private Texture2D blackTexture; // Voor de zwarte achtergrond
 
-        private Level _currentLevel; 
+        private Level _currentLevel;
+
+        private List<Rectangle> _pathBounds; // Bevat toegestane gebieden (paden)
+        private List<Rectangle> _blockedAreas; 
+
 
         public Game1()
         {
@@ -60,6 +65,8 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         protected override void Initialize()
         {
+            _graphics.IsFullScreen = true; 
+            _graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
             base.Initialize();
         }
@@ -98,7 +105,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             if (_currentState == GameState.StartScreen)
             {
-                if (IsMouseOverText(mouseState, startPosition, "Start") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
+                if (IsMouseOverText(mouseState, startPosition, "Start") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released) //&& keyboardState.IsKeyDown(Keys.Enter)
                 {
                     StartTransition(); 
                 }
@@ -130,6 +137,20 @@ namespace Neagu_Sergiu_Game_Development_Project
                     LoadLevel2(); 
                 }
 
+                /*if (_currentLevel == Level.Level2)
+                {
+                    if (Math.Abs(_vampire.Position.X - 350) < 10 && Math.Abs(_vampire.Position.Y - 59) < 10)
+                    {
+                        LoadLevel1();
+                        _vampire.Position = new Vector2(10, 230); // Nieuwe startpositie in Level1
+                        if (_vampire.Position.X <= 0 && _currentLevel == Level.Level1) //!= Level.Level2)
+                        {
+                            LoadLevel2();
+                        }
+
+                    }
+                }*/
+
                 if (_currentLevel == Level.Level2)
                 {
                     if (Math.Abs(_vampire.Position.X - 70) < 10 && Math.Abs(_vampire.Position.Y - 145) < 10)
@@ -137,6 +158,19 @@ namespace Neagu_Sergiu_Game_Development_Project
                         LoadLevel3();  
                     }
                 }
+
+                /*if (_currentLevel == Level.Level3)
+                {
+                    if (Math.Abs(_vampire.Position.X - 5) < 10 && Math.Abs(_vampire.Position.Y - 115) < 10)
+                    {
+                        LoadLevel2();
+                        _vampire.Position = new Vector2(350, 60);
+                        if (Math.Abs(_vampire.Position.X - 70) < 10 && Math.Abs(_vampire.Position.Y - 145) < 10 && _currentLevel == Level.Level2)
+                        {
+                            LoadLevel3();
+                        }
+                    }
+                }*/
             }
 
             _previousMouseState = mouseState;
@@ -145,28 +179,68 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private void CheckCollision()
         {
-            if (_vampire.Position.X < 0)
-                _vampire.Position = new Vector2(0, _vampire.Position.Y);
-            if (_vampire.Position.X > _graphics.PreferredBackBufferWidth - _vampire.BoundingBox.Width)
-                _vampire.Position = new Vector2(_graphics.PreferredBackBufferWidth - _vampire.BoundingBox.Width, _vampire.Position.Y);
+            bool isInsidePath = false;
 
-            if (_vampire.Position.Y < 0)
-                _vampire.Position = new Vector2(_vampire.Position.X, 0);
-            if (_vampire.Position.Y > _graphics.PreferredBackBufferHeight - _vampire.BoundingBox.Height)
-                _vampire.Position = new Vector2(_vampire.Position.X, _graphics.PreferredBackBufferHeight - _vampire.BoundingBox.Height);
+            // Controleer of de BoundingBox van de vampier overlapt met een van de pad-rechthoeken
+            foreach (var path in _pathBounds)
+            {
+                if (_vampire.CurrentHitbox.Intersects(path))
+                {
+                    isInsidePath = true;
+                    break;
+                }
+            }
+
+            // Controleer of de vampier een geblokkeerd gebied raakt
+            foreach (var blockedArea in _blockedAreas)
+            {
+                if (_vampire.CurrentHitbox.Intersects(blockedArea))
+                {
+                    isInsidePath = false; 
+                    break;
+                }
+            }
+
+            // Als de vampier buiten het pad is, reset positie naar de vorige geldige positie
+            if (!isInsidePath) 
+            {
+                _vampire.Position = _vampire.PreviousPosition;
+            }
         }
 
         private void LoadLevel1()
         {
             _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheets_1");
-            _vampire.Position = new Vector2(370, 90);  // Reset de positie  
+            _vampire.Position = new Vector2(370, 90);
+
+            _pathBounds = new List<Rectangle>
+            {
+                new Rectangle(45, 150, 350, 110) //x, y, width, height
+            };
+
+            _blockedAreas = new List<Rectangle>
+            {
+                new Rectangle(49, 130, 300, 100) 
+            };
         }
 
         private void LoadLevel2()
         {
             _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_2");
-            _vampire.Position = new Vector2(350, 70);
+            _vampire.Position = new Vector2(350, 70); 
             _currentLevel = Level.Level2;
+
+            _pathBounds = new List<Rectangle>
+            {
+                new Rectangle(100, 100, 300, 300) 
+            };
+
+            _blockedAreas = new List<Rectangle>
+            {
+                //new Rectangle(10, 10, 50, 50), 
+                new Rectangle(200, 300, 100, 50)
+            };
+
         }
 
         private void LoadLevel3()
@@ -174,6 +248,17 @@ namespace Neagu_Sergiu_Game_Development_Project
             _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_3");
             _vampire.Position = new Vector2(30,115);
             _currentLevel = Level.Level3;
+
+            _pathBounds = new List<Rectangle>
+            {
+                new Rectangle(50, 50, 350, 350)
+            };
+
+            _blockedAreas = new List<Rectangle>
+            {
+                //new Rectangle(10, 10, 50, 50), 
+                new Rectangle(250, 300, 20, 20)
+            };
         }
 
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
@@ -187,13 +272,6 @@ namespace Neagu_Sergiu_Game_Development_Project
         {
             _currentState = GameState.Transition;
             _transitionTime = 0;
-        }
-
-        private void StartTransitionToNextLevel()
-        {
-            _currentState = GameState.Transition;
-            _transitionTime = 0;
-            LoadLevel2();
         }
 
         private void StartGame()
@@ -215,7 +293,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             }
             else if (_currentState == GameState.Transition)
             {
-                // Zwarte achtergrond voor overgang
+                // Black background for transition !
                 _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black);
                 _spriteBatch.DrawString(_font, "Game is Starting...", new Vector2(_graphics.PreferredBackBufferWidth / 2 - 260, _graphics.PreferredBackBufferHeight / 2-30), Color.White);
             }

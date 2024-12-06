@@ -10,16 +10,21 @@ namespace Neagu_Sergiu_Game_Development_Project
 {
     public class Animation
     {
-        public Texture2D Texture { get; private set; }   // The texture containing the animation frames
+        public List<Rectangle> FrameHitboxes { get; private set; } // Hitboxes voor elke frame
+        public Texture2D Texture { get; private set; }  
         public int FrameCount { get; private set; }       // The total number of frames in the animation
         public int CurrentFrame { get; private set; }     // The current frame being shown
         public float FrameTime { get; private set; }      // The time between frames (used to control animation speed)
         private float _elapsedTime;                         // The time that has passed since the last frame update
 
-        public Animation(Texture2D texture, int frameCount, float frameTime = 0.1f)
+        public Animation(Texture2D texture, int frameCount, List<Rectangle> frameHitboxes, float frameTime = 0.1f)
         {
+            if (frameHitboxes == null || frameHitboxes.Count != frameCount)
+                throw new ArgumentException("Aantal hitboxes moet gelijk zijn aan het aantal frames.");
+
             Texture = texture;
             FrameCount = frameCount;
+            FrameHitboxes = frameHitboxes; 
             FrameTime = frameTime;
             CurrentFrame = 0;
             _elapsedTime = 0f;
@@ -46,6 +51,18 @@ namespace Neagu_Sergiu_Game_Development_Project
             // Calculate the width of each frame (assuming frames are laid out horizontally in a single row)
             int frameWidth = Texture.Width / FrameCount;
             return new Rectangle(CurrentFrame * frameWidth, 0, frameWidth, Texture.Height); // Return the current frame's source rectangle
+        }
+
+        // Methode om de huidige hitbox op te halen
+        public Rectangle GetCurrentHitbox()
+        {
+            if (FrameHitboxes == null || CurrentFrame >= FrameHitboxes.Count)
+            {
+                // Zorg ervoor dat een zinvolle fout wordt gegenereerd
+                throw new InvalidOperationException("FrameHitboxes is niet correct geïnitialiseerd of de huidige frame-index is ongeldig.");
+            }
+
+            return FrameHitboxes[CurrentFrame];
         }
     }
 }
