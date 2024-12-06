@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
+using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
+using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -18,7 +20,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         Victory
     }
 
-    public enum Level 
+    public enum Level
     {
         Level1,
         Level2,
@@ -46,15 +48,15 @@ namespace Neagu_Sergiu_Game_Development_Project
         private Vampire _vampire;
 
         private double _transitionTime;
-        private const double TransitionDuration = 2.0; 
+        private const double TransitionDuration = 2.0;
 
-        private Texture2D blackTexture; // Voor de zwarte achtergrond
+        private Texture2D blackTexture; // For the black background
 
         private Level _currentLevel;
 
-        private List<Rectangle> _pathBounds; // Bevat toegestane gebieden (paden)
-        private List<Rectangle> _blockedAreas; 
-
+        private List<Rectangle> _pathBounds; // Contains permitted areas 
+        private List<Rectangle> _blockedAreas;
+        private LevelBase _currentLevelClass;
 
         public Game1()
         {
@@ -65,7 +67,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         protected override void Initialize()
         {
-            _graphics.IsFullScreen = true; 
+            _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
             base.Initialize();
@@ -84,8 +86,8 @@ namespace Neagu_Sergiu_Game_Development_Project
             startPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 170, _graphics.PreferredBackBufferHeight / 2 - 30);
             exitPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2 + 30, _graphics.PreferredBackBufferHeight / 2 - 30);
 
-            _backgroundSound = Content.Load<Song>("castle");
-            MediaPlayer.Play(_backgroundSound);
+            var castleTheme = Content.Load<Song>("castle");
+            BackgroundMusicManager.Instance.Play(castleTheme);
             MediaPlayer.IsRepeating = true;
 
             gameName = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 400, _graphics.PreferredBackBufferHeight / 2 + 205);
@@ -107,7 +109,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             {
                 if (IsMouseOverText(mouseState, startPosition, "Start") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released) //&& keyboardState.IsKeyDown(Keys.Enter)
                 {
-                    StartTransition(); 
+                    StartTransition();
                 }
                 if (IsMouseOverText(mouseState, exitPosition, "Exit") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
                 {
@@ -119,146 +121,35 @@ namespace Neagu_Sergiu_Game_Development_Project
                 _transitionTime += gameTime.ElapsedGameTime.TotalSeconds;
                 if (_transitionTime >= TransitionDuration)
                 {
-                    StartGame();  
+                    StartGame();
                 }
             }
             else if (_currentState == GameState.Playing)
             {
-                bool isAttacking = keyboardState.IsKeyDown(Keys.Z);
+                bool isAttacking = mouseState.LeftButton == ButtonState.Pressed;
                 bool isJumping = keyboardState.IsKeyDown(Keys.Space);
                 bool isRunning = keyboardState.IsKeyDown(Keys.LeftShift);
 
                 _vampire.Update(gameTime, keyboardState, mouseState, isAttacking, isJumping, isRunning);
 
-                CheckCollision();
+                _currentLevelClass.CheckCollision();
 
                 if (_vampire.Position.X <= 0 && _currentLevel != Level.Level2)
                 {
-                    LoadLevel2(); 
+                    LoadLevel2();
                 }
-
-                /*if (_currentLevel == Level.Level2)
-                {
-                    if (Math.Abs(_vampire.Position.X - 350) < 10 && Math.Abs(_vampire.Position.Y - 59) < 10)
-                    {
-                        LoadLevel1();
-                        _vampire.Position = new Vector2(10, 230); // Nieuwe startpositie in Level1
-                        if (_vampire.Position.X <= 0 && _currentLevel == Level.Level1) //!= Level.Level2)
-                        {
-                            LoadLevel2();
-                        }
-
-                    }
-                }*/
 
                 if (_currentLevel == Level.Level2)
                 {
                     if (Math.Abs(_vampire.Position.X - 70) < 10 && Math.Abs(_vampire.Position.Y - 145) < 10)
                     {
-                        LoadLevel3();  
+                        LoadLevel3();
                     }
                 }
-
-                /*if (_currentLevel == Level.Level3)
-                {
-                    if (Math.Abs(_vampire.Position.X - 5) < 10 && Math.Abs(_vampire.Position.Y - 115) < 10)
-                    {
-                        LoadLevel2();
-                        _vampire.Position = new Vector2(350, 60);
-                        if (Math.Abs(_vampire.Position.X - 70) < 10 && Math.Abs(_vampire.Position.Y - 145) < 10 && _currentLevel == Level.Level2)
-                        {
-                            LoadLevel3();
-                        }
-                    }
-                }*/
             }
 
             _previousMouseState = mouseState;
             base.Update(gameTime);
-        }
-
-        private void CheckCollision()
-        {
-            bool isInsidePath = false;
-
-            // Controleer of de BoundingBox van de vampier overlapt met een van de pad-rechthoeken
-            foreach (var path in _pathBounds)
-            {
-                if (_vampire.CurrentHitbox.Intersects(path))
-                {
-                    isInsidePath = true;
-                    break;
-                }
-            }
-
-            // Controleer of de vampier een geblokkeerd gebied raakt
-            foreach (var blockedArea in _blockedAreas)
-            {
-                if (_vampire.CurrentHitbox.Intersects(blockedArea))
-                {
-                    isInsidePath = false; 
-                    break;
-                }
-            }
-
-            // Als de vampier buiten het pad is, reset positie naar de vorige geldige positie
-            if (!isInsidePath) 
-            {
-                _vampire.Position = _vampire.PreviousPosition;
-            }
-        }
-
-        private void LoadLevel1()
-        {
-            _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheets_1");
-            _vampire.Position = new Vector2(370, 90);
-
-            _pathBounds = new List<Rectangle>
-            {
-                new Rectangle(45, 150, 350, 110) //x, y, width, height
-            };
-
-            _blockedAreas = new List<Rectangle>
-            {
-                new Rectangle(49, 130, 300, 100) 
-            };
-        }
-
-        private void LoadLevel2()
-        {
-            _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_2");
-            _vampire.Position = new Vector2(350, 70); 
-            _currentLevel = Level.Level2;
-
-            _pathBounds = new List<Rectangle>
-            {
-                new Rectangle(100, 100, 300, 300) 
-            };
-
-            _blockedAreas = new List<Rectangle>
-            {
-                //new Rectangle(10, 10, 50, 50), 
-                new Rectangle(200, 300, 100, 50)
-            };
-
-        }
-
-        private void LoadLevel3()
-        {
-            _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_3");
-            _vampire.Position = new Vector2(30,115);
-            _currentLevel = Level.Level3;
-
-            _pathBounds = new List<Rectangle>
-            {
-                new Rectangle(50, 50, 350, 350)
-            };
-
-            _blockedAreas = new List<Rectangle>
-            {
-                //new Rectangle(10, 10, 50, 50), 
-                new Rectangle(250, 300, 20, 20)
-            };
         }
 
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
@@ -280,6 +171,26 @@ namespace Neagu_Sergiu_Game_Development_Project
             LoadLevel1();
         }
 
+        private void LoadLevel1()
+        {
+            _currentLevelClass = new Level1(GraphicsDevice, Content, _vampire); 
+            _currentCastleTexture = _currentLevelClass.GetCastleTexture();
+        }
+
+        private void LoadLevel2()
+        {
+            _currentLevelClass = new Level2(GraphicsDevice, Content, _vampire); 
+            _currentCastleTexture = _currentLevelClass.GetCastleTexture();
+            _currentLevel = Level.Level2;
+        }
+
+        private void LoadLevel3()
+        {
+            _currentLevelClass = new Level3(GraphicsDevice, Content, _vampire); 
+            _currentCastleTexture = _currentLevelClass.GetCastleTexture();
+            _currentLevel = Level.Level3;
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
@@ -295,7 +206,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             {
                 // Black background for transition !
                 _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black);
-                _spriteBatch.DrawString(_font, "Game is Starting...", new Vector2(_graphics.PreferredBackBufferWidth / 2 - 260, _graphics.PreferredBackBufferHeight / 2-30), Color.White);
+                _spriteBatch.DrawString(_font, "Game is Starting...", new Vector2(_graphics.PreferredBackBufferWidth / 2 - 260, _graphics.PreferredBackBufferHeight / 2 - 30), Color.White);
             }
             else if (_currentState == GameState.Playing)
             {

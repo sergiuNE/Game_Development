@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Neagu_Sergiu_Game_Development_Project;
+using Neagu_Sergiu_Game_Development_Project.Animations;
 using System.Collections.Generic;
 
 public class Vampire

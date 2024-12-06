@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Neagu_Sergiu_Game_Development_Project
+namespace Neagu_Sergiu_Game_Development_Project.Interfaces
 {
     public interface IAnimationStrategy
     {

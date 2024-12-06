@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Neagu_Sergiu_Game_Development_Project
+namespace Neagu_Sergiu_Game_Development_Project.Animations
 {
     public class Animation
     {
-        public List<Rectangle> FrameHitboxes { get; private set; } // Hitboxes voor elke frame
-        public Texture2D Texture { get; private set; }  
+        public List<Rectangle> FrameHitboxes { get; private set; }
+        public Texture2D Texture { get; private set; }
         public int FrameCount { get; private set; }       // The total number of frames in the animation
         public int CurrentFrame { get; private set; }     // The current frame being shown
         public float FrameTime { get; private set; }      // The time between frames (used to control animation speed)
@@ -24,7 +24,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             Texture = texture;
             FrameCount = frameCount;
-            FrameHitboxes = frameHitboxes; 
+            FrameHitboxes = frameHitboxes;
             FrameTime = frameTime;
             CurrentFrame = 0;
             _elapsedTime = 0f;

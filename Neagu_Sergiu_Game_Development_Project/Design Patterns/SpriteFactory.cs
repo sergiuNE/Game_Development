@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Neagu_Sergiu_Game_Development_Project;
+using Neagu_Sergiu_Game_Development_Project.Animations;
 using System.Collections.Generic;
 
 public class SpriteFactory
@@ -13,199 +13,51 @@ public class SpriteFactory
         _content = content;
     }
 
+    // Gemeenschappelijke methode voor het laden van animaties
+    private Animation LoadAnimation(string textureName, List<Rectangle> hitboxes, int frameCount)
+    {
+        return new Animation(
+            _content.Load<Texture2D>(textureName),
+            frameCount,
+            frameHitboxes: hitboxes
+        );
+    }
+
+    // Methode om de animaties te laden
     public Dictionary<string, Animation> LoadAnimations()
     {
         var animations = new Dictionary<string, Animation>();
 
-        // Load animations
-
-        var idleLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(10, 10, 40, 50)
-        };
-        animations["idleLeft"] = new Animation(
-            _content.Load<Texture2D>("idle_vampire_left"),
-            frameCount: 1,
-            frameHitboxes: idleLeftHitboxes
-        );
-
-        var idleRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(10, 10, 40, 50) 
-        };
-        animations["idleRight"] = new Animation(
-            _content.Load<Texture2D>("idle_vampire_right"),
-            frameCount: 1,
-            frameHitboxes: idleRightHitboxes
-        );
-
-        var walkLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50),
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["walkLeft"] = new Animation(
-            _content.Load<Texture2D>("walk_vampire_left"),
-            frameCount: 5,
-            frameHitboxes: walkLeftHitboxes
-        );
-
-        var walkRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50),
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["walkRight"] = new Animation(
-            _content.Load<Texture2D>("walk_vampire_right"),
-            frameCount: 5,
-            frameHitboxes: walkRightHitboxes
-        );
-
-        var attackLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52),
-            new Rectangle(12, 10, 38, 50) 
-        };
-        animations["attackLeft"] = new Animation(
-            _content.Load<Texture2D>("vampire_attack_left"),
-            frameCount: 5,
-            frameHitboxes: attackLeftHitboxes
-        );
-
-        var attackRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["attackRight"] = new Animation(
-            _content.Load<Texture2D>("vampire_attack_right"),
-            frameCount: 5,
-            frameHitboxes: attackRightHitboxes
-        );
-
-        var dieLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52),
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["dieLeft"] = new Animation(
-            _content.Load<Texture2D>("vampire_die_left"),
-            frameCount: 5,
-            frameHitboxes: dieLeftHitboxes
-        );
-
-        var dieRightHitboxes = new List<Rectangle>
-        {
+        // Herbruikbare hitbox voor de meeste animaties
+        var defaultHitboxes = new List<Rectangle> {
             new Rectangle(12, 10, 38, 50),
-            new Rectangle(10, 12, 40, 48), 
+            new Rectangle(10, 12, 40, 48),
             new Rectangle(14, 10, 36, 50),
-            new Rectangle(10, 10, 40, 52), 
+            new Rectangle(10, 10, 40, 52),
             new Rectangle(12, 10, 38, 50)
         };
-        animations["dieRight"] = new Animation(
-            _content.Load<Texture2D>("vampire_die_right"),
-            frameCount: 5,
-            frameHitboxes: dieLeftHitboxes
-        );
 
-        var hurtLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["hurtLeft"] = new Animation(
-            _content.Load<Texture2D>("vampire_hurt_left"),
-            frameCount: 5,
-            frameHitboxes: hurtLeftHitboxes
-        );
+        // Voor elke animatie kun je nu de LoadAnimation methode aanroepen
+        animations["idleLeft"] = LoadAnimation("idle_vampire_left", new List<Rectangle> { new Rectangle(10, 10, 40, 50) }, 1);
+        animations["idleRight"] = LoadAnimation("idle_vampire_right", new List<Rectangle> { new Rectangle(10, 10, 40, 50) }, 1);
 
-        var hurtRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50) 
-        };
-        animations["hurtRight"] = new Animation(
-            _content.Load<Texture2D>("vampire_hurt_right"),
-            frameCount: 5,
-            frameHitboxes: hurtRightHitboxes
-        );
+        animations["walkLeft"] = LoadAnimation("walk_vampire_left", defaultHitboxes, 5);
+        animations["walkRight"] = LoadAnimation("walk_vampire_right", defaultHitboxes, 5);
 
-        var jumpLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50) 
-        };
-        animations["jumpLeft"] = new Animation(
-            _content.Load<Texture2D>("vampire_jump_left"),
-            frameCount: 5,
-            frameHitboxes: jumpLeftHitboxes
-        );
+        animations["attackLeft"] = LoadAnimation("vampire_attack_left", defaultHitboxes, 5);
+        animations["attackRight"] = LoadAnimation("vampire_attack_right", defaultHitboxes, 5);
 
-        var jumpRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50),
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52),
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["jumpRight"] = new Animation(
-            _content.Load<Texture2D>("vampire_jump_right"),
-            frameCount: 5,
-            frameHitboxes: jumpRightHitboxes
-        );
+        animations["dieLeft"] = LoadAnimation("vampire_die_left", defaultHitboxes, 5);
+        animations["dieRight"] = LoadAnimation("vampire_die_right", defaultHitboxes, 5);
 
-        var runLeftHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["runLeft"] = new Animation(
-            _content.Load<Texture2D>("vampire_run_left"),
-            frameCount: 5,
-            frameHitboxes: runLeftHitboxes
-        );
+        animations["hurtLeft"] = LoadAnimation("vampire_hurt_left", defaultHitboxes, 5);
+        animations["hurtRight"] = LoadAnimation("vampire_hurt_right", defaultHitboxes, 5);
 
-        var runRightHitboxes = new List<Rectangle>
-        {
-            new Rectangle(12, 10, 38, 50), 
-            new Rectangle(10, 12, 40, 48), 
-            new Rectangle(14, 10, 36, 50), 
-            new Rectangle(10, 10, 40, 52), 
-            new Rectangle(12, 10, 38, 50)  
-        };
-        animations["runRight"] = new Animation(
-            _content.Load<Texture2D>("vampire_run_right"),
-            frameCount: 5,
-            frameHitboxes: runRightHitboxes
-        );
+        animations["jumpLeft"] = LoadAnimation("vampire_jump_left", defaultHitboxes, 5);
+        animations["jumpRight"] = LoadAnimation("vampire_jump_right", defaultHitboxes, 5);
+
+        animations["runLeft"] = LoadAnimation("vampire_run_left", defaultHitboxes, 5);
+        animations["runRight"] = LoadAnimation("vampire_run_right", defaultHitboxes, 5);
 
         return animations;
     }

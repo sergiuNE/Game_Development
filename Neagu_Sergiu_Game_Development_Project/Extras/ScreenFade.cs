@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Neagu_Sergiu_Game_Development_Project
+namespace Neagu_Sergiu_Game_Development_Project.Extras
 {
     public class ScreenFade
     {
