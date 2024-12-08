@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\levels\\level2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\levels\\level2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Level2.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Levels\\Level2.cs",
+              "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Levels\\Level2.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Levels\\Level2.cs",
+              "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Levels\\Level2.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACEAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T17:17:58.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Game1.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Game1.cs",
               "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Game1.cs",
               "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJIAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T18:33:07.573Z",
+              "WhenOpened": "2024-12-08T17:12:21.934Z",
               "EditorCaption": ""
             }
           ]

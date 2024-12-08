@@ -16,7 +16,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
             : base(graphicsDevice, content, vampire)
         {
             LoadContent();
-            _vampire.Position = new Vector2(350, 70); 
+            _vampire.Position = new Vector2(350, 57); 
         }
 
         public override void LoadContent()
@@ -24,12 +24,15 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
             _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_2");
             _pathBounds = new List<Rectangle>
         {
-            new Rectangle(100, 100, 300, 300)
+            new Rectangle(78, 110, 515, 110) 
         };
 
             _blockedAreas = new List<Rectangle>
         {
-            new Rectangle(200, 300, 100, 50)
+            new Rectangle(78, 110, 266, 27),
+            new Rectangle(190, 220, 330, 27),
+            new Rectangle(420, 110, 266, 27)
+
         };
         }
     }

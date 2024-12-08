@@ -40,7 +40,6 @@ namespace Neagu_Sergiu_Game_Development_Project
         private Vector2 startPosition;
         private Vector2 exitPosition;
         private MouseState _previousMouseState;
-        private Song _backgroundSound;
 
         private GameState _currentState;
 
@@ -50,12 +49,10 @@ namespace Neagu_Sergiu_Game_Development_Project
         private double _transitionTime;
         private const double TransitionDuration = 2.0;
 
-        private Texture2D blackTexture; // For the black background
+        private Texture2D blackTexture; 
 
         private Level _currentLevel;
 
-        private List<Rectangle> _pathBounds; // Contains permitted areas 
-        private List<Rectangle> _blockedAreas;
         private LevelBase _currentLevelClass;
 
         public Game1()
@@ -67,8 +64,8 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         protected override void Initialize()
         {
-            _graphics.IsFullScreen = true;
-            _graphics.ApplyChanges();
+            //_graphics.IsFullScreen = true;
+            //_graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
             base.Initialize();
         }
@@ -204,7 +201,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             }
             else if (_currentState == GameState.Transition)
             {
-                // Black background for transition !
+                // Black background for transition
                 _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black);
                 _spriteBatch.DrawString(_font, "Game is Starting...", new Vector2(_graphics.PreferredBackBufferWidth / 2 - 260, _graphics.PreferredBackBufferHeight / 2 - 30), Color.White);
             }

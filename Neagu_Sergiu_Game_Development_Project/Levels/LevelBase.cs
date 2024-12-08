@@ -32,7 +32,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
 
         public virtual void LoadContent()
         {
-            // Dit wordt overschreven in de subklassen
+            // This is overwritten in the subclasses
         }
 
         public Texture2D GetCastleTexture()
@@ -44,7 +44,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
         {
             bool isInsidePath = false;
 
-            // Controleer of de BoundingBox van de vampier overlapt met een van de pad-rechthoeken
+            // Check that the vampire's BoundingBox overlaps with one of the path rectangles
             foreach (var path in _pathBounds)
             {
                 if (_vampire.CurrentHitbox.Intersects(path))
@@ -54,7 +54,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
                 }
             }
 
-            // Controleer of de vampier een geblokkeerd gebied raakt
+            // Check if the vampire hits a blocked area
             foreach (var blockedArea in _blockedAreas)
             {
                 if (_vampire.CurrentHitbox.Intersects(blockedArea))
@@ -64,7 +64,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
                 }
             }
 
-            // Als de vampier buiten het pad is, reset positie naar de vorige geldige positie
+            // If the vampire is outside the path, reset position to previous valid position
             if (!isInsidePath)
             {
                 _vampire.Position = _vampire.PreviousPosition;

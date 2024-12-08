@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Neagu_Sergiu_Game_Development_Project.Animations;
 using System.Collections.Generic;
 
-public class SpriteFactory
+public class SpriteFactory //Factory Design
 {
     private ContentManager _content;
 

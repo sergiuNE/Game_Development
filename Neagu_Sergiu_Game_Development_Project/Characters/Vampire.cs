@@ -12,7 +12,7 @@ public class Vampire
     public Vector2 Position;
     public Vector2 PreviousPosition; // Added for collision handling
     private bool _isFacingRight;
-    private float _speed = 2.8f; //4.5f
+    private float _speed = 2.7f;
     private int uniformWidth = 64;  // Uniform width of the sprite
     private int uniformHeight = 64; // Uniform height of the sprite
 
@@ -52,7 +52,7 @@ public class Vampire
         PreviousPosition = Position;
 
         if (isAttacking)
-            ChangeState("Attack"); //mouseState.LeftButton
+            ChangeState("Attack");
         else if (isJumping)
             ChangeState("Jump");
         else if (isRunning)
@@ -119,11 +119,6 @@ public class Vampire
             _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
         }
     }
-
-    /*public Rectangle BoundingBox
-    {
-        get { return new Rectangle((int)Position.X, (int)Position.Y, uniformWidth, uniformHeight); }
-    }*/
     
     public void Draw(SpriteBatch spriteBatch)
     {

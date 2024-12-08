@@ -15,7 +15,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Extras
         public ScreenFade()
         {
             _opacity = 0f;
-            _fadeSpeed = 0.01f; // Adjust fade speed as needed
+            _fadeSpeed = 0.01f; // Fade speed
             _isFadingIn = false;
             _isFadingOut = false;
         }
