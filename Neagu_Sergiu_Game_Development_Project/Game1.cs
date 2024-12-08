@@ -64,8 +64,8 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         protected override void Initialize()
         {
-            //_graphics.IsFullScreen = true;
-            //_graphics.ApplyChanges();
+            _graphics.IsFullScreen = true;
+            _graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
             base.Initialize();
         }

@@ -24,14 +24,8 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
             _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_3");
             _pathBounds = new List<Rectangle>
         {
-            new Rectangle(50, 50, 350, 350) // x, y, width, height
-        };
-
-            _blockedAreas = new List<Rectangle>
-        {
-            new Rectangle(250, 300, 20, 20)
+            new Rectangle(50, 150, 200, 5) 
         };
         }
     }
-
 }
