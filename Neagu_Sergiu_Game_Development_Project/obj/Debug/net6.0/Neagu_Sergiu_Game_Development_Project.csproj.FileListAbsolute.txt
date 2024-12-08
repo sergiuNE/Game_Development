@@ -47,3 +47,6 @@ C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_D
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\walk_vampire_left.xnb
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\walk_vampire_right.xnb
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\LevelFont.xnb
+C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\heart_empty.xnb
+C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\heart_full.xnb
+C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\heart_half.xnb

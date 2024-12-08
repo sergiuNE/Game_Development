@@ -10,6 +10,9 @@
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle_spritesheets_1.png</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/castle.mp3</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/GameNameFont.spritefont</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/heart_empty.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/heart_full.png</File>
+    <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/heart_half.png</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/idle_vampire_left.png</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/idle_vampire_right.png</File>
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/LevelFont.spritefont</File>
@@ -28,6 +31,9 @@
     <File>C:/Users/user1/Desktop/Neagu_Sergiu_Game_Development_Project/Neagu_Sergiu_Game_Development_Project/Content/walk_vampire_right.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

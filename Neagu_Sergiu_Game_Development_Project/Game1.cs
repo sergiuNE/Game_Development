@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
+using Neagu_Sergiu_Game_Development_Project.Hearts;
 using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
 using System.Collections.Generic;
@@ -49,11 +50,23 @@ namespace Neagu_Sergiu_Game_Development_Project
         private double _transitionTime;
         private const double TransitionDuration = 2.0;
 
+        //Texture
         private Texture2D blackTexture; 
 
+        //Level
         private Level _currentLevel;
-
         private LevelBase _currentLevelClass;
+
+
+        //Hearts
+        private List<Heart> _hearts; // For the UI
+        private int _maxHealth = 5;  
+        private int _currentHealth = 3;
+        private const float HeartScale = 0.5f; 
+        private const int HeartSpacing = 5;
+
+        //Hunter
+        private List<Hunter> _hunters;
 
         public Game1()
         {
@@ -95,6 +108,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             _vampire = new Vampire(new Vector2(350, 80));
             _vampire.LoadContent(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -211,7 +225,6 @@ namespace Neagu_Sergiu_Game_Development_Project
                 _spriteBatch.Draw(_currentCastleTexture, new Vector2(0, 0), Color.White);
                 _vampire.Draw(_spriteBatch);
             }
-
             _spriteBatch.End();
             base.Draw(gameTime);
         }
