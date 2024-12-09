@@ -13,8 +13,8 @@ public class Vampire
     public Vector2 PreviousPosition; // Added for collision handling
     private bool _isFacingRight;
     private float _speed = 2.7f;
-    private int uniformWidth = 64;  // Uniform width of the sprite
-    private int uniformHeight = 64; // Uniform height of the sprite
+    private int uniformWidth = 64;  
+    private int uniformHeight = 64; 
 
     public Rectangle CurrentHitbox
     {

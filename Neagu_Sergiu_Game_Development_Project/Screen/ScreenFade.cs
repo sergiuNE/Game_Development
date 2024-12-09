@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Neagu_Sergiu_Game_Development_Project.Extras
+namespace Neagu_Sergiu_Game_Development_Project.Screen
 {
     public class ScreenFade
     {
@@ -11,7 +11,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Extras
         private float _fadeSpeed;
 
         public bool IsFadingComplete => _opacity >= 1.0f;
-
         public ScreenFade()
         {
             _opacity = 0f;

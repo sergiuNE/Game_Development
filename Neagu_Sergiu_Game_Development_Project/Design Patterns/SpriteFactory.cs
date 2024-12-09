@@ -13,7 +13,7 @@ public class SpriteFactory //Factory Design
         _content = content;
     }
 
-    // Gemeenschappelijke methode voor het laden van animaties
+    // Common method for loading animations
     private Animation LoadAnimation(string textureName, List<Rectangle> hitboxes, int frameCount)
     {
         return new Animation(
@@ -23,12 +23,12 @@ public class SpriteFactory //Factory Design
         );
     }
 
-    // Methode om de animaties te laden
+    // Method to load the animations
     public Dictionary<string, Animation> LoadAnimations()
     {
         var animations = new Dictionary<string, Animation>();
 
-        // Herbruikbare hitbox voor de meeste animaties
+        // Reusable hitbox for most animations
         var defaultHitboxes = new List<Rectangle> {
             new Rectangle(12, 10, 38, 50),
             new Rectangle(10, 12, 40, 48),
@@ -37,7 +37,6 @@ public class SpriteFactory //Factory Design
             new Rectangle(12, 10, 38, 50)
         };
 
-        // Voor elke animatie kun je nu de LoadAnimation methode aanroepen
         animations["idleLeft"] = LoadAnimation("idle_vampire_left", new List<Rectangle> { new Rectangle(10, 10, 40, 50) }, 1);
         animations["idleRight"] = LoadAnimation("idle_vampire_right", new List<Rectangle> { new Rectangle(10, 10, 40, 50) }, 1);
 

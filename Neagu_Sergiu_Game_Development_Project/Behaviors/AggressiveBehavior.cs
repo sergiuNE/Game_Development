@@ -11,7 +11,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Behaviors
 {
     public class AggressiveBehavior : IEnemyBehavior
     {
-        private float speed = 2f; // Snelheid van de agressieve beweging
+        private float speed = 2f;
 
         public void ExecuteBehavior(Enemy enemy, GameTime gameTime)
         {

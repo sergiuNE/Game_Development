@@ -13,7 +13,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Behaviors
     {
         public void ExecuteBehavior(Enemy enemy, GameTime gameTime)
         {
-            // Vijand blijft stil of beweegt langzaam
+            // Vijand blijft stil of beweegt langzaam (AI)
         }
     }
 }

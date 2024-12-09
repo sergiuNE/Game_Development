@@ -58,7 +58,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Animations
         {
             if (FrameHitboxes == null || CurrentFrame >= FrameHitboxes.Count)
             {
-                // Zorg ervoor dat een zinvolle fout wordt gegenereerd
                 throw new InvalidOperationException("FrameHitboxes is niet correct geïnitialiseerd of de huidige frame-index is ongeldig.");
             }
 

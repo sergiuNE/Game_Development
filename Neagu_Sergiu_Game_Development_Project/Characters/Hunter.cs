@@ -21,7 +21,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public Hunter(Vector2 position)
         {
             this.Position = position;
-            this.Behavior = new AggressiveBehavior(); // Stel het gedrag in op agressief
+            this.Behavior = new AggressiveBehavior(); 
         }
 
         public override void LoadContent(ContentManager content)

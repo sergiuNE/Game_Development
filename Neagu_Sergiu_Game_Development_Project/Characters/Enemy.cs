@@ -9,8 +9,8 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
     public abstract class Enemy
     {
         public Vector2 Position { get; protected set; }
-        public IEnemyBehavior Behavior { get; set; } // Gedrag van de vijand
-        public Vector2 PlayerPosition { get; set; } // De positie van de speler
+        public IEnemyBehavior Behavior { get; set; } // Behavior Enemy
+        public Vector2 PlayerPosition { get; set; } 
         public void SetPosition(Vector2 newPosition)
         {
             Position = newPosition;
