@@ -9,18 +9,8 @@ using System.Threading.Tasks;
 
 namespace Neagu_Sergiu_Game_Development_Project.Behaviors
 {
-    public class AggressiveBehavior : IEnemyBehavior
+    public class AggressiveBehavior
     {
-        private float speed = 2f;
-
-        public void ExecuteBehavior(Enemy enemy, GameTime gameTime)
-        {
-            // Beweeg de vijand naar de speler
-            Vector2 direction = enemy.PlayerPosition - enemy.Position; // Richting naar de speler
-            direction.Normalize(); // Normaliseer om een consistente snelheid te behouden
-
-            // Beweeg de vijand in de richting van de speler
-            enemy.SetPosition(enemy.Position + direction * speed);
-        }
+       // private float speed = 2f;
     }
 }

@@ -9,11 +9,7 @@ using System.Threading.Tasks;
 
 namespace Neagu_Sergiu_Game_Development_Project.Behaviors
 {
-    public class PassiveBehavior : IEnemyBehavior
+    public class PassiveBehavior
     {
-        public void ExecuteBehavior(Enemy enemy, GameTime gameTime)
-        {
-            // Vijand blijft stil of beweegt langzaam (AI)
-        }
     }
 }

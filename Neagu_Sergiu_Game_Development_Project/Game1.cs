@@ -51,18 +51,17 @@ namespace Neagu_Sergiu_Game_Development_Project
         private const double TransitionDuration = 2.0;
 
         //Texture
-        private Texture2D blackTexture; 
+        private Texture2D blackTexture;
 
         //Level
         private Level _currentLevel;
         private LevelBase _currentLevelClass;
 
-
         //Hearts
         private List<Heart> _hearts; // For the UI
-        private int _maxHealth = 5;  
-        private int _currentHealth = 3;
-        private const float HeartScale = 0.5f; 
+        private int _maxHealth = 5;
+        private int _currentHealth = 2;
+        private const float HeartScale = 0.6f;
         private const int HeartSpacing = 5;
 
         //Hunter
@@ -73,12 +72,13 @@ namespace Neagu_Sergiu_Game_Development_Project
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            _hunters = new List<Hunter>();
         }
 
         protected override void Initialize()
         {
-           // _graphics.IsFullScreen = true;
-           // _graphics.ApplyChanges();
+            // _graphics.IsFullScreen = true;
+            // _graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
             base.Initialize();
         }
@@ -109,8 +109,25 @@ namespace Neagu_Sergiu_Game_Development_Project
             _vampire = new Vampire(new Vector2(350, 80));
             _vampire.LoadContent(Content);
 
-        }
+            // Harten initialiseren
+            _hearts = new List<Heart>();
+            for (int i = 0; i < _currentHealth; i++) // Begin met aantal levens
+            {
+                Vector2 position = new Vector2(
+                    _graphics.PreferredBackBufferWidth - (Heart.HeartSize.X * HeartScale + HeartSpacing) * (i + 1),
+                    HeartSpacing
+                );
+                Heart heart = new Heart(position);
+                heart.LoadContent(Content);
+                _hearts.Add(heart);
+            }
 
+            // Load content for all hunters
+            foreach (var hunter in _hunters)
+            {
+                hunter.LoadContent(Content, hunter.GetType().Name); // We use the hunter type's name as texture path
+            }
+        }
         protected override void Update(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
@@ -118,7 +135,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             if (_currentState == GameState.StartScreen)
             {
-                if (IsMouseOverText(mouseState, startPosition, "Start") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released) //&& keyboardState.IsKeyDown(Keys.Enter)
+                if (IsMouseOverText(mouseState, startPosition, "Start") && mouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
                 {
                     StartTransition();
                 }
@@ -143,7 +160,24 @@ namespace Neagu_Sergiu_Game_Development_Project
 
                 _vampire.Update(gameTime, keyboardState, mouseState, isAttacking, isJumping, isRunning);
 
+                foreach (var hunter in _hunters)
+                {
+                    hunter.Update(gameTime);
+                }
+
                 _currentLevelClass.CheckCollision();
+
+                // Simuleer schade voor testen
+                if (keyboardState.IsKeyDown(Keys.D1) && _currentHealth > 0)
+                {
+                    _currentHealth--;
+                    UpdateHearts();
+                }
+                if (keyboardState.IsKeyDown(Keys.D2) && _currentHealth < _maxHealth)
+                {
+                    _currentHealth++;
+                    UpdateHearts();
+                }
 
                 if (_vampire.Position.X <= 0 && _currentLevel != Level.Level2)
                 {
@@ -161,6 +195,21 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             _previousMouseState = mouseState;
             base.Update(gameTime);
+        }
+
+        private void UpdateHearts()
+        {
+            _hearts.Clear();
+            for (int i = 0; i < _currentHealth; i++)
+            {
+                Vector2 position = new Vector2(
+                    _graphics.PreferredBackBufferWidth - (Heart.HeartSize.X * HeartScale + HeartSpacing) * (i + 1),
+                    HeartSpacing
+                );
+                Heart heart = new Heart(position);
+                heart.LoadContent(Content);
+                _hearts.Add(heart);
+            }
         }
 
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
@@ -184,22 +233,52 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private void LoadLevel1()
         {
-            _currentLevelClass = new Level1(GraphicsDevice, Content, _vampire); 
+            _currentLevelClass = new Level1(GraphicsDevice, Content, _vampire);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
+            _currentLevel = Level.Level1;
+
+            // Hunters for Level 1
+            _hunters.Clear();
+            Vector2 positionHunterOne = new Vector2(50, 260);
+            _hunters.Add(HunterFactory.CreateHunter(HunterType.HunterOne, positionHunterOne));
+            foreach (var hunter in _hunters)
+            {
+                hunter.LoadContent(Content, hunter.GetType().Name);
+            }
         }
 
         private void LoadLevel2()
         {
-            _currentLevelClass = new Level2(GraphicsDevice, Content, _vampire); 
+            _currentLevelClass = new Level2(GraphicsDevice, Content, _vampire);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level2;
+
+            // Hunters for Level 2
+            _hunters.Clear();
+            Vector2 positionHunterTwo = new Vector2(100, 190);
+            Vector2 positionHunterThree = new Vector2(550, 190);
+            _hunters.Add(HunterFactory.CreateHunter(HunterType.HunterTwo, positionHunterTwo));
+            _hunters.Add(HunterFactory.CreateHunter(HunterType.HunterThree, positionHunterThree));
+            foreach (var hunter in _hunters)
+            {
+                hunter.LoadContent(Content, hunter.GetType().Name);
+            }
         }
 
         private void LoadLevel3()
         {
-            _currentLevelClass = new Level3(GraphicsDevice, Content, _vampire); 
+            _currentLevelClass = new Level3(GraphicsDevice, Content, _vampire);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level3;
+
+            // Hunters for Level 3
+            _hunters.Clear();
+            Vector2 positionFinalBoss = new Vector2(90, 90);
+            _hunters.Add(HunterFactory.CreateHunter(HunterType.FinalBossHunter, positionFinalBoss));
+            foreach (var hunter in _hunters)
+            {
+                hunter.LoadContent(Content, hunter.GetType().Name);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -224,6 +303,18 @@ namespace Neagu_Sergiu_Game_Development_Project
                 _spriteBatch.Draw(blackTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.Black);
                 _spriteBatch.Draw(_currentCastleTexture, new Vector2(0, 0), Color.White);
                 _vampire.Draw(_spriteBatch);
+
+                // Draw all hunters
+                foreach (var hunter in _hunters)
+                {
+                    hunter.Draw(_spriteBatch);
+                }
+
+                // Teken de harten
+                foreach (var heart in _hearts)
+                {
+                    heart.Draw(_spriteBatch, HeartScale);
+                }
             }
             _spriteBatch.End();
             base.Draw(gameTime);

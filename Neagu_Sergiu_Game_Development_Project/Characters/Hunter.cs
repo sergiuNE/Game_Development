@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿    using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
@@ -9,46 +9,125 @@ using System.Text;
 using System.Threading.Tasks;
 using Neagu_Sergiu_Game_Development_Project.Interfaces;
 using Neagu_Sergiu_Game_Development_Project.Behaviors;
+using Neagu_Sergiu_Game_Development_Project.Animations;
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters
 {
-    public class Hunter : Enemy
+    public abstract class Hunter
     {
-        private Texture2D _texture;
-        private Vector2 _position;
-        public Rectangle BoundingBox => new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
+        protected Dictionary<string, Animation> _animations;
+        protected Animation _currentAnimation;
+        public Vector2 Position { get; protected set; }
+        protected bool _isFacingRight;
+        protected float _speed;
+        protected int UniformWidth { get; set; } = 55; 
+        protected int UniformHeight { get; set; } = 55; 
 
-        public Hunter(Vector2 position)
+        public Rectangle CurrentHitbox
         {
-            this.Position = position;
-            this.Behavior = new AggressiveBehavior(); 
+            get
+            {
+                var frameHitbox = _currentAnimation.GetCurrentHitbox();
+                return new Rectangle(
+                    (int)(Position.X + frameHitbox.X),
+                    (int)(Position.Y + frameHitbox.Y),
+                    frameHitbox.Width,
+                    frameHitbox.Height
+                );
+            }
         }
 
-        public override void LoadContent(ContentManager content)
+        public Hunter(Vector2 initialPosition, float speed)
         {
-            _texture = content.Load<Texture2D>("hunter"); // Laad de afbeelding voor de hunter
+            Position = initialPosition;
+            _isFacingRight = true;
+            _speed = speed;
         }
 
-        /* public void Update(GameTime gameTime, Vector2 playerPosition, Action onPlayerHit)
+        public virtual void LoadContent(ContentManager content, string texturePath)
         {
-        // Simpele logica om naar de speler toe te bewegen
-        Vector2 direction = playerPosition - _position;
-        if (direction.Length() > 1)
-        {
-            direction.Normalize();
-            _position += direction * 2f; // Beweging naar de speler
+            var spriteFactory = new SpriteFactory(content);
+            _animations = spriteFactory.LoadAnimationsForHunter(texturePath);
+            _currentAnimation = _animations["idleRight"];
         }
 
-        // Check op collision met speler
-        if (BoundingBox.Intersects(new Rectangle((int)playerPosition.X, (int)playerPosition.Y, 50, 50))) // Placeholder voor speler's bounding box
+        public void Update(GameTime gameTime)
         {
-            onPlayerHit?.Invoke(); // Roept de schade-methode aan
-        }
-    }*/
+            _currentAnimation.Update(gameTime);
 
-        public override void Draw(SpriteBatch spriteBatch)
+            // Placeholder AI: Hunters alternate between idle and moving randomly
+            Random random = new Random();
+            if (random.Next(100) < 5) // 5% chance per frame to move
+            {
+                Vector2 randomDirection = new Vector2(random.Next(-1, 2), random.Next(-1, 2));
+                MoveToward(Position + randomDirection * 6); // Move a small random distance
+            }
+            else
+            {
+                ChangeState("Idle");
+            }
+        }
+
+        public void ChangeState(string state)
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            if (state == "Idle")
+            {
+                _currentAnimation = _isFacingRight ? _animations["idleRight"] : _animations["idleLeft"];
+            }
+            else if (state == "Attack")
+            {
+                _currentAnimation = _isFacingRight ? _animations["attackRight"] : _animations["attackLeft"];
+            }
+            else if (state == "Run")
+            {
+                _currentAnimation = _isFacingRight ? _animations["runRight"] : _animations["runLeft"];
+            }
+            else if (state == "Die")
+            {
+                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+            }
+            else if (state == "Hurt")
+            {
+                _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
+            }
+        }
+
+        public virtual void MoveToward(Vector2 targetPosition)
+        {
+            if (Position.X < targetPosition.X)
+            {
+                Position = new Vector2(Position.X + _speed, Position.Y);
+                _isFacingRight = true;
+            }
+            else if (Position.X > targetPosition.X)
+            {
+                Position = new Vector2(Position.X - _speed, Position.Y);
+                _isFacingRight = false;
+            }
+
+            if (Position.Y < targetPosition.Y)
+            {
+                Position = new Vector2(Position.X, Position.Y + _speed);
+            }
+            else if (Position.Y > targetPosition.Y)
+            {
+                Position = new Vector2(Position.X, Position.Y - _speed);
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            var destRectangle = new Rectangle(
+                (int)Position.X, (int)Position.Y,
+                UniformWidth, UniformHeight
+            );
+
+            spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
+        }
+
+        public bool CheckCollision(Rectangle other)
+        {
+            return CurrentHitbox.Intersects(other);
         }
     }
 }
