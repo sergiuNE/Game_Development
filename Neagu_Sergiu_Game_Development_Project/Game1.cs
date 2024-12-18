@@ -125,7 +125,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             // Load content for all hunters
             foreach (var hunter in _hunters)
             {
-                hunter.LoadContent(Content, hunter.GetType().Name); // We use the hunter type's name as texture path
+                hunter.LoadContent(Content, hunter.GetType().Name); 
             }
         }
         protected override void Update(GameTime gameTime)

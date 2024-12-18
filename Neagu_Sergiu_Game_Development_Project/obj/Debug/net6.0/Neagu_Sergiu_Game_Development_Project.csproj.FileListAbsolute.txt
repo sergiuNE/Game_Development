@@ -96,3 +96,5 @@ C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_D
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\hunter_two_run_right.xnb
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\hunter_two_walk_left.xnb
 C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\hunter_two_walk_right.xnb
+C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\HealthBarBackground.xnb
+C:\Users\user1\Desktop\Neagu_Sergiu_Game_Development_Project\Neagu_Sergiu_Game_Development_Project\bin\Debug\net6.0\Content\HealthBarForeground.xnb

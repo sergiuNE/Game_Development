@@ -1,4 +1,4 @@
-﻿    using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
@@ -51,7 +51,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _currentAnimation = _animations["idleRight"];
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             _currentAnimation.Update(gameTime);
 
@@ -115,7 +115,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             var destRectangle = new Rectangle(
                 (int)Position.X, (int)Position.Y,
