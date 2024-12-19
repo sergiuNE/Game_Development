@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Neagu_Sergiu_Game_Development_Project.Characters;
 using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters

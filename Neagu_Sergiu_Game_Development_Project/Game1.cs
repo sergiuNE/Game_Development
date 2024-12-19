@@ -8,7 +8,6 @@ using Neagu_Sergiu_Game_Development_Project.Hearts;
 using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace Neagu_Sergiu_Game_Development_Project
 {
@@ -40,7 +39,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         private Vector2 gameName;
         private Vector2 startPosition;
         private Vector2 exitPosition;
-        private MouseState _previousMouseState;
+        private MouseState _previousMouseState; 
 
         private GameState _currentState;
 

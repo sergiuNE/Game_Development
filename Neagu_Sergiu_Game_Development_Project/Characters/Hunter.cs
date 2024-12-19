@@ -4,11 +4,6 @@ using Microsoft.Xna.Framework;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Neagu_Sergiu_Game_Development_Project.Interfaces;
-using Neagu_Sergiu_Game_Development_Project.Behaviors;
 using Neagu_Sergiu_Game_Development_Project.Animations;
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters
@@ -20,8 +15,8 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public Vector2 Position { get; protected set; }
         protected bool _isFacingRight;
         protected float _speed;
-        protected int UniformWidth { get; set; } = 55; 
-        protected int UniformHeight { get; set; } = 55; 
+        protected int UniformWidth { get; set; } = 55;
+        protected int UniformHeight { get; set; } = 55;
 
         public Rectangle CurrentHitbox
         {
