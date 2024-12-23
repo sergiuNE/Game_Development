@@ -10,6 +10,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         private Health _health;
         private HealthBar _healthBar;
         private Vector2 _healthBarOffset = new Vector2(0, -30);
+        
 
         public Vector2 HealthBarPosition => Position + _healthBarOffset;
 

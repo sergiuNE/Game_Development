@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Neagu_Sergiu_Game_Development_Project.Animations;
 using System.Collections.Generic;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
+using Neagu_Sergiu_Game_Development_Project.Characters;
 
 public class Vampire
 {
@@ -15,7 +16,8 @@ public class Vampire
     private bool _isFacingRight;
     private float _speed = 2.7f;
     private int uniformWidth = 64;  
-    private int uniformHeight = 64; 
+    private int uniformHeight = 64;
+    private bool canMove = true; // New flag to track if the vampire can move when collide with hunter
 
     public Rectangle CurrentHitbox
     {
@@ -73,6 +75,9 @@ public class Vampire
 
     private void Move(KeyboardState keyboardState)
     {
+        if (!canMove) 
+            return;
+
         if (keyboardState.IsKeyDown(Keys.Left))
             Position = new Vector2(Position.X - _speed, Position.Y);
         if (keyboardState.IsKeyDown(Keys.Right))
@@ -82,7 +87,6 @@ public class Vampire
         if (keyboardState.IsKeyDown(Keys.Down))
             Position = new Vector2(Position.X, Position.Y + _speed);
     }
-
 
     public bool IsMovingVertically(KeyboardState keyboardState)
     {

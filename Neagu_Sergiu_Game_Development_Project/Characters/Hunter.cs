@@ -12,11 +12,11 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
     {
         protected Dictionary<string, Animation> _animations;
         protected Animation _currentAnimation;
-        public Vector2 Position { get; protected set; }
+        public Vector2 Position { get;  set; }
         protected bool _isFacingRight;
         protected float _speed;
-        protected int UniformWidth { get; set; } = 55;
-        protected int UniformHeight { get; set; } = 55;
+        protected int UniformWidth { get; set; } = 52;
+        protected int UniformHeight { get; set; } = 52;
 
         public Rectangle CurrentHitbox
         {

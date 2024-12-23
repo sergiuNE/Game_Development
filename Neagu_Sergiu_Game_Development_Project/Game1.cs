@@ -63,7 +63,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         private const float HeartScale = 0.6f;
         private const int HeartSpacing = 5;
 
-        //Hunter
+        //Hunters
         private List<Hunter> _hunters;
 
         public Game1()
@@ -110,7 +110,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             // Harten initialiseren
             _hearts = new List<Heart>();
-            for (int i = 0; i < _currentHealth; i++) // Begin met aantal levens
+            for (int i = 0; i < _currentHealth; i++) 
             {
                 Vector2 position = new Vector2(
                     _graphics.PreferredBackBufferWidth - (Heart.HeartSize.X * HeartScale + HeartSpacing) * (i + 1),
@@ -161,7 +161,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
                 foreach (var hunter in _hunters)
                 {
-                    hunter.Update(gameTime);
+                    hunter.Update(gameTime); 
                 }
 
                 _currentLevelClass.CheckCollision();
@@ -191,7 +191,6 @@ namespace Neagu_Sergiu_Game_Development_Project
                     }
                 }
             }
-
             _previousMouseState = mouseState;
             base.Update(gameTime);
         }
@@ -232,7 +231,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private void LoadLevel1()
         {
-            _currentLevelClass = new Level1(GraphicsDevice, Content, _vampire);
+            _currentLevelClass = new Level1(GraphicsDevice, Content, _vampire, _hunters);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level1;
 
@@ -248,7 +247,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private void LoadLevel2()
         {
-            _currentLevelClass = new Level2(GraphicsDevice, Content, _vampire);
+            _currentLevelClass = new Level2(GraphicsDevice, Content, _vampire, _hunters);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level2;
 
@@ -266,7 +265,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         private void LoadLevel3()
         {
-            _currentLevelClass = new Level3(GraphicsDevice, Content, _vampire);
+            _currentLevelClass = new Level3(GraphicsDevice, Content, _vampire, _hunters);
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level3;
 

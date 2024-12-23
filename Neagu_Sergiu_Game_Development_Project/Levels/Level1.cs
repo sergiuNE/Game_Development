@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Neagu_Sergiu_Game_Development_Project.Characters;
 
 namespace Neagu_Sergiu_Game_Development_Project.Levels
 {
     public class Level1 : LevelBase
     {
-        public Level1(GraphicsDevice graphicsDevice, ContentManager content, Vampire vampire)
-            : base(graphicsDevice, content, vampire)
+        public Level1(GraphicsDevice graphicsDevice, ContentManager content, Vampire vampire, List<Hunter> hunterone)
+            : base(graphicsDevice, content, vampire, hunterone)
         {
             LoadContent();
             _vampire.Position = new Vector2(370, 90);
@@ -26,6 +27,11 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
             {
                 new Rectangle(49, 130, 300, 100)
             };
+        }
+        protected override void HandleVampireHunterCollision()
+        {
+            // Custom collision logic for Level1
+            _vampire.Position = _vampire.PreviousPosition;
         }
     }
 }
