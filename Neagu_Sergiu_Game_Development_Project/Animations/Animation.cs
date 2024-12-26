@@ -47,10 +47,9 @@ namespace Neagu_Sergiu_Game_Development_Project.Animations
         {
             // Calculate the width of each frame (assuming frames are laid out horizontally in a single row)
             int frameWidth = Texture.Width / FrameCount;
-            return new Rectangle(CurrentFrame * frameWidth, 0, frameWidth, Texture.Height); // Return the current frame's source rectangle
+            return new Rectangle(CurrentFrame * frameWidth, 0, frameWidth, Texture.Height);
         }
 
-        // Methode om de huidige hitbox op te halen
         public Rectangle GetCurrentHitbox()
         {
             if (FrameHitboxes == null || CurrentFrame >= FrameHitboxes.Count)

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using Neagu_Sergiu_Game_Development_Project.Characters;
+using Neagu_Sergiu_Game_Development_Project.Characters; 
 
 namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
 {

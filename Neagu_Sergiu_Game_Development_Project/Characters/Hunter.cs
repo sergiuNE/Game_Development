@@ -5,8 +5,9 @@ using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
 using System;
 using System.Collections.Generic;
 using Neagu_Sergiu_Game_Development_Project.Animations;
+using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 
-namespace Neagu_Sergiu_Game_Development_Project.Characters
+namespace Neagu_Sergiu_Game_Development_Project.Characters 
 {
     public abstract class Hunter
     {
@@ -15,8 +16,14 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public Vector2 Position { get;  set; }
         protected bool _isFacingRight;
         protected float _speed;
-        protected int UniformWidth { get; set; } = 52;
+        protected int UniformWidth { get; set; } = 52; 
         protected int UniformHeight { get; set; } = 52;
+
+        public Health Health { get; private set; }
+
+        private bool _isHurt; // To track flicker state
+        private float _hurtTimer; // Timer for hurt flicker
+        private const float HurtDuration = 0.5f; // Duration for flicker in seconds
 
         public Rectangle CurrentHitbox
         {
@@ -32,11 +39,12 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
 
-        public Hunter(Vector2 initialPosition, float speed)
+        public Hunter(Vector2 initialPosition, float speed, int maxHealth)
         {
             Position = initialPosition;
             _isFacingRight = true;
             _speed = speed;
+            Health = new Health(maxHealth);
         }
 
         public virtual void LoadContent(ContentManager content, string texturePath)
@@ -46,7 +54,28 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _currentAnimation = _animations["idleRight"];
         }
 
-        public virtual void Update(GameTime gameTime)
+        public void TakeDamage(int damage)
+        {
+            if (_isHurt) return; // Prevent stacking damage during flicker
+
+            Health.TakeDamage(damage);
+            _isHurt = true;
+            _hurtTimer = 0;
+            _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
+
+            if (Health.IsDead)
+            {
+                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+            }
+        }
+
+        public void FaceVampire(Vector2 vampirePosition)
+        {
+            _isFacingRight = vampirePosition.X > this.Position.X;
+            _currentAnimation = _isFacingRight ? _animations["attackRight"] : _animations["attackLeft"];
+        }
+
+        public virtual void Update(GameTime gameTime, Vampire vampire)
         {
             _currentAnimation.Update(gameTime);
 
@@ -60,6 +89,22 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             else
             {
                 ChangeState("Idle");
+            }
+
+            float distance = Vector2.Distance(vampire.Position, this.Position);
+
+            if (distance < 55)
+            {
+                FaceVampire(vampire.Position);
+
+                if (CheckCollision(vampire.CurrentHitbox))
+                {
+                    vampire.TakeDamage(1); // Hunters deal half a heart of damage
+                }
+            }
+            else
+            {
+                ChangeState("Walk");
             }
         }
 

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
+using Neagu_Sergiu_Game_Development_Project.End_Menu;
 using Neagu_Sergiu_Game_Development_Project.Hearts;
 using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
@@ -59,12 +60,16 @@ namespace Neagu_Sergiu_Game_Development_Project
         //Hearts
         private List<Heart> _hearts; // For the UI
         private int _maxHealth = 5;
-        private int _currentHealth = 2;
+        private static int _currentHealth = 2;
         private const float HeartScale = 0.6f;
         private const int HeartSpacing = 5;
 
         //Hunters
         private List<Hunter> _hunters;
+        public static List<Hunter> Hunters = new List<Hunter>(); // Track all hunters
+
+        private GameOverMenu _gameOverMenu;
+        private bool _isGameOver = false; // To track the game state
 
         public Game1()
         {
@@ -105,7 +110,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             blackTexture = new Texture2D(GraphicsDevice, 1, 1);
             blackTexture.SetData(new[] { Color.Black });
 
-            _vampire = new Vampire(new Vector2(350, 80));
+            _vampire = new Vampire(new Vector2(350, 80), 6);
             _vampire.LoadContent(Content);
 
             // Harten initialiseren
@@ -161,7 +166,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
                 foreach (var hunter in _hunters)
                 {
-                    hunter.Update(gameTime); 
+                    hunter.Update(gameTime, _vampire); 
                 }
 
                 _currentLevelClass.CheckCollision();
@@ -210,6 +215,22 @@ namespace Neagu_Sergiu_Game_Development_Project
             }
         }
 
+        public static void AddHeart()
+        {
+            if (_currentHealth < 2)
+                _currentHealth++;
+        }
+
+        public void RestartLevel()
+        {
+            Initialize();
+        }
+
+        public void Exit()
+        {
+            Exit(); // Close the game
+        }
+
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
         {
             Vector2 textSize = _font.MeasureString(text);
@@ -227,6 +248,13 @@ namespace Neagu_Sergiu_Game_Development_Project
         {
             _currentState = GameState.Playing;
             LoadLevel1();
+        }
+       
+
+        // Initialize the GameOverMenu in your game class
+        public void InitializeGameOverMenu(SpriteFont font)
+        {
+            _gameOverMenu = new GameOverMenu(font, new Vector2(200, 200)); // Adjust the position as needed
         }
 
         private void LoadLevel1()
@@ -302,7 +330,6 @@ namespace Neagu_Sergiu_Game_Development_Project
                 _spriteBatch.Draw(_currentCastleTexture, new Vector2(0, 0), Color.White);
                 _vampire.Draw(_spriteBatch);
 
-                // Draw all hunters
                 foreach (var hunter in _hunters)
                 {
                     hunter.Draw(_spriteBatch);

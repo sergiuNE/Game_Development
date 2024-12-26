@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Neagu_Sergiu_Game_Development_Project.HealthClasses;
+using Neagu_Sergiu_Game_Development_Project.HealthClasses; 
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters
 {
@@ -14,7 +14,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
         public Vector2 HealthBarPosition => Position + _healthBarOffset;
 
-        public FinalBoss(Vector2 initialPosition) : base(initialPosition, 2f)
+        public FinalBoss(Vector2 initialPosition) : base(initialPosition, 2f, 4)
         {
             UniformWidth = 90;
             UniformHeight = 90;
@@ -41,26 +41,30 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             );
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Vampire vampire)
         {
-            base.Update(gameTime);
+            base.Update(gameTime, vampire);
 
             // Update health bar position
             _healthBar.Position = HealthBarPosition;
 
-            // Simulate damage or healing for testing if needed
-            /*
-             * if (damage condition)  
-             * {
-             *    _health.TakeDamage(10);
-             * }
-             *
-             * if (_health.IsDead) 
-             * {
-             *    ChangeState("Die");
-             * }
-             */
+            if (_health.CurrentHealth <= 0)
+            {
+                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+            }
+
+            _healthBar.Update(_health.CurrentHealth, _health.MaxHealth);
         }
+
+        public void TakeDamage(int damage)
+        {
+            Health.TakeDamage(damage);
+            if (Health.IsDead)
+            {
+                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+            }
+        }
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {

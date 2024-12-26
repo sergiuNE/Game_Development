@@ -25,5 +25,4 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         public bool IsDead => CurrentHealth <= 0;
     }
-
 }

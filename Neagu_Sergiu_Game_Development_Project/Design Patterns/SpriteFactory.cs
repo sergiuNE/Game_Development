@@ -155,7 +155,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
                 animations["hurtLeft"] = LoadAnimation("final_boss_hurt_left", defaultHitboxes, 5);
                 animations["hurtRight"] = LoadAnimation("final_boss_hurt_right", defaultHitboxes, 5);
             }
-
             return animations;
         }
     }

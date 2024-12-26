@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework.Input;
 using Neagu_Sergiu_Game_Development_Project.Animations;
 using System.Collections.Generic;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
+using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 using Neagu_Sergiu_Game_Development_Project.Characters;
+using Neagu_Sergiu_Game_Development_Project;
 
 public class Vampire
 {
@@ -17,7 +19,12 @@ public class Vampire
     private float _speed = 2.7f;
     private int uniformWidth = 64;  
     private int uniformHeight = 64;
-    private bool canMove = true; // New flag to track if the vampire can move when collide with hunter
+    private bool canMove = true;
+    private bool _isHurt; 
+    private float _hurtTimer; // Timer for hurt flicker
+    private const float HurtDuration = 0.5f; // Duration for flicker in seconds
+
+    public Health Health { get; private set; }
 
     public Rectangle CurrentHitbox
     {
@@ -33,11 +40,12 @@ public class Vampire
         }
     }
 
-    public Vampire(Vector2 initialPosition)
+    public Vampire(Vector2 initialPosition, int maxHealth)
     {
         Position = initialPosition;
         PreviousPosition = initialPosition; 
         _isFacingRight = true;
+        Health = new Health(maxHealth);
     }
 
     public void LoadContent(ContentManager content)
@@ -47,9 +55,46 @@ public class Vampire
         _currentAnimation = _animations["idleRight"];
     }
 
+    public void TakeDamage(int damage)
+    {
+        if (_isHurt) return; // Prevent stacking damage during flicker
+
+        Health.TakeDamage(damage);
+        _isHurt = true;
+        _hurtTimer = 0;
+
+        _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
+
+        // Check if the vampire is dead
+        if (Health.IsDead)
+        {
+            _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+            TriggerGameOver();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        // Logic to show GameOverMenu
+    }
+
+    public void AttackHunter(Hunter hunter)
+    {
+        hunter.TakeDamage(1);
+        _currentAnimation = _isFacingRight ? _animations["attackRight"] : _animations["attackLeft"];
+    }
+
     public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, bool isAttacking, bool isJumping, bool isRunning)
     {
         _currentAnimation.Update(gameTime);
+
+        // Handle hurt flicker
+        if (_isHurt)
+        {
+            _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (_hurtTimer >= HurtDuration)
+                _isHurt = false; // Reset flicker state
+        }
 
         // Store the previous position for collision handling
         PreviousPosition = Position;
@@ -71,6 +116,29 @@ public class Vampire
         if (keyboardState.IsKeyDown(Keys.Right)) _isFacingRight = true;
 
         Move(keyboardState);
+
+        // Attack logic
+        if (mouseState.LeftButton == ButtonState.Pressed)
+        {
+            isAttacking = true;
+            foreach (var hunter in Game1.Hunters)
+            {
+                if (CheckCollision(hunter.CurrentHitbox))
+                {
+                    AttackHunter(hunter);
+                    if (hunter.Health.IsDead)
+                    {
+                        Game1.AddHeart(); // Add a heart if hunter dies
+                    }
+                }
+            }
+        }
+
+        // Game logic for when vampire dies
+        if (Health.IsDead)
+        {
+            TriggerGameOver();
+        }
     }
 
     private void Move(KeyboardState keyboardState)
@@ -127,12 +195,11 @@ public class Vampire
     
     public void Draw(SpriteBatch spriteBatch)
     {
-        var destRectangle = new Rectangle(
-            (int)Position.X, (int)Position.Y,
-            uniformWidth, uniformHeight
-        );
-
-        spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
+        if (!_isHurt || ((int)(_hurtTimer * 10) % 2 == 0)) // Flicker effect
+        {
+            var destRectangle = new Rectangle((int)Position.X, (int)Position.Y, uniformWidth, uniformHeight);
+            spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
+        }
     }
 
     public bool CheckCollision(Rectangle other)

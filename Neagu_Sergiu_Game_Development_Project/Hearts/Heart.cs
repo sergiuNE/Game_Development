@@ -13,7 +13,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Hearts
             Empty
         }
 
-        private Texture2D _fullTexture;
+        private Texture2D _fullTexture; 
         private Texture2D _halfTexture;
         private Texture2D _emptyTexture;
         private Vector2 _position;

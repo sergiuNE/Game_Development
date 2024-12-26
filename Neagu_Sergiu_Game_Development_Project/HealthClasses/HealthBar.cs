@@ -16,6 +16,8 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         private int _foregroundOffsetX; // Offset voor foreground naar rechts
 
+        private float _healthPercentage; // Tracks the current health as a percentage
+
         public HealthBar(Texture2D backgroundTexture, Texture2D foregroundTexture, Vector2 position, int backgroundWidth, int backgroundHeight, int foregroundWidth, int foregroundHeight, int foregroundOffsetX)
         {
             _backgroundTexture = backgroundTexture;
@@ -26,6 +28,15 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
             _foregroundWidth = foregroundWidth;
             _foregroundHeight = foregroundHeight;
             _foregroundOffsetX = foregroundOffsetX; // Stel de horizontale offset in
+            _healthPercentage = 1.0f; // Default to 100% health
+        }
+
+        public void Update(int currentHealth, int maxHealth)
+        {
+            // Calculate the current health percentage
+            _healthPercentage = currentHealth / (float)maxHealth;
+            // Ensure it remains within 0 and 1 bounds
+            _healthPercentage = MathHelper.Clamp(_healthPercentage, 0.0f, 1.0f);
         }
 
         public void Draw(SpriteBatch spriteBatch, int currentHealth, int maxHealth)

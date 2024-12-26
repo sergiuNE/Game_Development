@@ -65,7 +65,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Screen
                 new Rectangle(0, 0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height),
                 Color.White * _opacity
             );
-
             fadeTexture.Dispose();
         }
     }
