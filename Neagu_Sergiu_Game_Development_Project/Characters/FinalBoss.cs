@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Neagu_Sergiu_Game_Development_Project.End_Menu;
 using Neagu_Sergiu_Game_Development_Project.HealthClasses; 
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters
@@ -10,8 +11,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         private Health _health;
         private HealthBar _healthBar;
         private Vector2 _healthBarOffset = new Vector2(0, -30);
-        
-
         public Vector2 HealthBarPosition => Position + _healthBarOffset;
 
         public FinalBoss(Vector2 initialPosition) : base(initialPosition, 2f, 4)
@@ -41,6 +40,26 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             );
         }
 
+        public override void TakeDamage(int damage)
+        {
+            if (IsDead) return;
+            base.TakeDamage(damage); // Ensure flicker and death logic are applied
+                                     // Reduce health bar by 25% per hit
+            _health.CurrentHealth -= 25;
+
+            if (_health.CurrentHealth <= 0)
+            {
+                _health.CurrentHealth = 0;
+                IsDead = true;
+                TriggerGameOver();
+            }
+        }
+       
+        private void TriggerGameOver()
+        {
+            Game1.gameOverMenu.ShowGameOverMenu();
+        }
+
         public override void Update(GameTime gameTime, Vampire vampire)
         {
             base.Update(gameTime, vampire);
@@ -48,23 +67,14 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             // Update health bar position
             _healthBar.Position = HealthBarPosition;
 
-            if (_health.CurrentHealth <= 0)
-            {
-                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
-            }
-
             _healthBar.Update(_health.CurrentHealth, _health.MaxHealth);
-        }
 
-        public void TakeDamage(int damage)
-        {
-            Health.TakeDamage(damage);
+            // Game logic for when finalboss dies
             if (Health.IsDead)
             {
-                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+                TriggerGameOver();
             }
         }
-
 
         public override void Draw(SpriteBatch spriteBatch)
         {

@@ -5,7 +5,7 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
     public class Health
     {
         public int MaxHealth { get; private set; }
-        public int CurrentHealth { get; private set; }
+        public int CurrentHealth { get; set; }
 
         public Health(int maxHealth)
         {
@@ -18,9 +18,9 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
             CurrentHealth = Math.Max(CurrentHealth - damage, 0); // Zorgt dat de health niet onder 0 gaat
         }
 
-        public void Heal(int amount)
+        public void AddHeart(int count)
         {
-            CurrentHealth = Math.Min(CurrentHealth + amount, MaxHealth); // Zorgt dat de health niet boven MaxHealth gaat
+            CurrentHealth = Math.Min(MaxHealth, CurrentHealth + count);
         }
 
         public bool IsDead => CurrentHealth <= 0;

@@ -15,7 +15,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
             _content = content;
         }
 
-        // Common method for loading animations
         private Animation LoadAnimation(string textureName, List<Rectangle> hitboxes, int frameCount)
         {
             return new Animation(
@@ -25,7 +24,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
             );
         }
 
-        // Method to load the animations
         public Dictionary<string, Animation> LoadAnimations()
         {
             var animations = new Dictionary<string, Animation>();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Neagu_Sergiu_Game_Development_Project.Characters 
 {
@@ -13,9 +14,23 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             base.LoadContent(content, "HunterOne");
         }
 
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+            /*if (IsDead)
+            {
+
+            }*/
+        }
+
         public override void Update(GameTime gameTime, Vampire vampire)
         {
             base.Update(gameTime, vampire);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
         }
     }
 }

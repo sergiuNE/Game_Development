@@ -25,7 +25,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Hearts
             _state = HeartState.Full;
         }
 
-        public static Vector2 HeartSize => new Vector2(50, 50); // Grootte van een hart (voor schaalberekening)
+        public static Vector2 HeartSize => new Vector2(50, 50);
 
         public void LoadContent(ContentManager content)
         {

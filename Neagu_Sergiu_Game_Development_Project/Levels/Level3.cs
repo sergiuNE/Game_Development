@@ -17,7 +17,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
 
         public override void LoadContent()
         {
-            _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_3");
+            _currentCastleTexture = Content.Load<Texture2D>("castle_spritesheet_3"); 
             _pathBounds = new List<Rectangle>
             {
                 new Rectangle(50, 150, 90, 5)

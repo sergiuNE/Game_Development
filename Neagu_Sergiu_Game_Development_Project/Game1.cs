@@ -41,17 +41,18 @@ namespace Neagu_Sergiu_Game_Development_Project
         private Vector2 startPosition;
         private Vector2 exitPosition;
         private MouseState _previousMouseState; 
-
         private GameState _currentState;
 
-        private Texture2D _currentCastleTexture;
+        //Vampire
         private Vampire _vampire;
 
+        //Transitions
         private double _transitionTime;
         private const double TransitionDuration = 2.0;
 
         //Texture
         private Texture2D blackTexture;
+        private Texture2D _currentCastleTexture;
 
         //Level
         private Level _currentLevel;
@@ -59,8 +60,8 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         //Hearts
         private List<Heart> _hearts; // For the UI
-        private int _maxHealth = 5;
-        private static int _currentHealth = 2;
+        private const int MaxHealth = 7;
+        private static int _currentHealth = 3;
         private const float HeartScale = 0.6f;
         private const int HeartSpacing = 5;
 
@@ -68,8 +69,9 @@ namespace Neagu_Sergiu_Game_Development_Project
         private List<Hunter> _hunters;
         public static List<Hunter> Hunters = new List<Hunter>(); // Track all hunters
 
-        private GameOverMenu _gameOverMenu;
-        private bool _isGameOver = false; // To track the game state
+        //GameOverMenu
+        public bool IsGameOver => _currentState == GameState.GameOver;
+        public static GameOverMenu gameOverMenu;
 
         public Game1()
         {
@@ -81,9 +83,10 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         protected override void Initialize()
         {
-            // _graphics.IsFullScreen = true;
-            // _graphics.ApplyChanges();
+            //_graphics.IsFullScreen = true;
+            //_graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
+
             base.Initialize();
         }
 
@@ -106,14 +109,17 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             gameName = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 400, _graphics.PreferredBackBufferHeight / 2 + 205);
 
-            // Zwarte texture voor overgangsdoeleinden
+            SpriteFont font = Content.Load<SpriteFont>("MenuFont");
+            gameOverMenu = new GameOverMenu(font, new Vector2(50, 150));
+
+            // Black texture for transitions
             blackTexture = new Texture2D(GraphicsDevice, 1, 1);
             blackTexture.SetData(new[] { Color.Black });
 
-            _vampire = new Vampire(new Vector2(350, 80), 6);
+            _vampire = new Vampire(new Vector2(350, 80),7);
             _vampire.LoadContent(Content);
 
-            // Harten initialiseren
+            // Hearts
             _hearts = new List<Heart>();
             for (int i = 0; i < _currentHealth; i++) 
             {
@@ -166,28 +172,16 @@ namespace Neagu_Sergiu_Game_Development_Project
 
                 foreach (var hunter in _hunters)
                 {
-                    hunter.Update(gameTime, _vampire); 
+                    hunter.Update(gameTime, _vampire);
                 }
 
                 _currentLevelClass.CheckCollision();
 
-                // Simuleer schade voor testen
-                if (keyboardState.IsKeyDown(Keys.D1) && _currentHealth > 0)
-                {
-                    _currentHealth--;
-                    UpdateHearts();
-                }
-                if (keyboardState.IsKeyDown(Keys.D2) && _currentHealth < _maxHealth)
-                {
-                    _currentHealth++;
-                    UpdateHearts();
-                }
-
+                // Controleer of de vampire van level verandert
                 if (_vampire.Position.X <= 0 && _currentLevel != Level.Level2)
                 {
                     LoadLevel2();
                 }
-
                 if (_currentLevel == Level.Level2)
                 {
                     if (Math.Abs(_vampire.Position.X - 70) < 10 && Math.Abs(_vampire.Position.Y - 145) < 10)
@@ -195,40 +189,88 @@ namespace Neagu_Sergiu_Game_Development_Project
                         LoadLevel3();
                     }
                 }
+
+                // Damage to the vampire
+                if (_vampire._isHurt)
+                {
+                    RemoveHeart(1); 
+                    _vampire._isHurt = false;
+                }
+
+                // Recover health when a Hunter is dead
+                var deadHunters = new List<Hunter>();
+                foreach (var hunter in _hunters)
+                {
+                    if (hunter.Health.IsDead)
+                    {
+                        AddHeart(1);
+                        deadHunters.Add(hunter);
+                    }
+                }
+
+                // Delete dead Hunters
+                foreach (var hunter in deadHunters)
+                {
+                    _hunters.Remove(hunter);
+                }
+
+                // Check for Game Over
+                if (_currentHealth <= 0)
+                {
+                    _currentState = GameState.GameOver;
+                    gameOverMenu.ShowGameOverMenu();
+                }
             }
+            else if (_currentState == GameState.GameOver)
+            {
+                gameOverMenu.Update(this, keyboardState);
+            }
+
             _previousMouseState = mouseState;
             base.Update(gameTime);
         }
 
+
         private void UpdateHearts()
         {
-            _hearts.Clear();
-            for (int i = 0; i < _currentHealth; i++)
+            // Only update if the heart count has changed
+            if (_hearts.Count != _currentHealth)
             {
-                Vector2 position = new Vector2(
-                    _graphics.PreferredBackBufferWidth - (Heart.HeartSize.X * HeartScale + HeartSpacing) * (i + 1),
-                    HeartSpacing
-                );
-                Heart heart = new Heart(position);
-                heart.LoadContent(Content);
-                _hearts.Add(heart);
+                _hearts.Clear();
+                for (int i = 0; i < _currentHealth; i++)
+                {
+                    Vector2 position = new Vector2(
+                        _graphics.PreferredBackBufferWidth - (Heart.HeartSize.X * HeartScale + HeartSpacing) * (i + 1),
+                        HeartSpacing
+                    );
+                    Heart heart = new Heart(position);
+                    heart.LoadContent(Content);
+                    _hearts.Add(heart);
+                }
             }
         }
 
-        public static void AddHeart()
+        public void AddHeart(int amount)
         {
-            if (_currentHealth < 2)
-                _currentHealth++;
+            _currentHealth = Math.Min(_currentHealth + amount, MaxHealth);
+            UpdateHearts();
+        }
+
+        public void RemoveHeart(int amount)
+        {
+            _currentHealth = Math.Max(_currentHealth - amount, 0);
+            UpdateHearts();
+
+            if (_currentHealth <= 0)
+            {
+                _currentState = GameState.GameOver;
+                gameOverMenu.ShowGameOverMenu();
+            }
         }
 
         public void RestartLevel()
         {
             Initialize();
-        }
-
-        public void Exit()
-        {
-            Exit(); // Close the game
         }
 
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
@@ -248,13 +290,6 @@ namespace Neagu_Sergiu_Game_Development_Project
         {
             _currentState = GameState.Playing;
             LoadLevel1();
-        }
-       
-
-        // Initialize the GameOverMenu in your game class
-        public void InitializeGameOverMenu(SpriteFont font)
-        {
-            _gameOverMenu = new GameOverMenu(font, new Vector2(200, 200)); // Adjust the position as needed
         }
 
         private void LoadLevel1()
@@ -279,7 +314,6 @@ namespace Neagu_Sergiu_Game_Development_Project
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level2;
 
-            // Hunters for Level 2
             _hunters.Clear();
             Vector2 positionHunterTwo = new Vector2(100, 190);
             Vector2 positionHunterThree = new Vector2(550, 190);
@@ -297,7 +331,6 @@ namespace Neagu_Sergiu_Game_Development_Project
             _currentCastleTexture = _currentLevelClass.GetCastleTexture();
             _currentLevel = Level.Level3;
 
-            // Hunters for Level 3
             _hunters.Clear();
             Vector2 positionFinalBoss = new Vector2(90, 90);
             _hunters.Add(HunterFactory.CreateHunter(HunterType.FinalBossHunter, positionFinalBoss));
@@ -335,12 +368,17 @@ namespace Neagu_Sergiu_Game_Development_Project
                     hunter.Draw(_spriteBatch);
                 }
 
-                // Teken de harten
                 foreach (var heart in _hearts)
                 {
                     heart.Draw(_spriteBatch, HeartScale);
                 }
             }
+
+            else if (_currentState == GameState.GameOver)
+            {
+                gameOverMenu.Draw(_spriteBatch);
+            }
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }

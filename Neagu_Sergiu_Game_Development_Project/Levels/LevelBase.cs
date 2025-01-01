@@ -39,7 +39,6 @@ public abstract class LevelBase
     {
         bool isInsidePath = false;
 
-        // Check that the vampire's BoundingBox overlaps with one of the path rectangles
         foreach (var path in _pathBounds)
         {
             if (_vampire.CurrentHitbox.Intersects(path))
@@ -78,7 +77,6 @@ public abstract class LevelBase
 
     protected virtual void HandleVampireHunterCollision()
     {
-        // Default behavior: Prevent Vampire from moving into the Hunter
         _vampire.Position = _vampire.PreviousPosition;
     }
 }

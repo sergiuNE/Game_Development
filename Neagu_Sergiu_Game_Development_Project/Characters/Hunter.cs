@@ -16,26 +16,32 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public Vector2 Position { get;  set; }
         protected bool _isFacingRight;
         protected float _speed;
-        protected int UniformWidth { get; set; } = 52; 
-        protected int UniformHeight { get; set; } = 52;
+        protected int UniformWidth { get; set; } = 54; 
+        protected int UniformHeight { get; set; } = 54;
 
-        public Health Health { get; private set; }
+        public Health Health { get; set; }
 
-        private bool _isHurt; // To track flicker state
-        private float _hurtTimer; // Timer for hurt flicker
-        private const float HurtDuration = 0.5f; // Duration for flicker in seconds
+        //For hunter to attack slower
+        private float _attackCooldown = 1.5f; 
+        private float _timeSinceLastAttack = 0f; 
+
+        //Hurt
+        private bool _isHurt; 
+        private float _hurtTimer; 
+        private const float HurtDuration = 0.5f;
+        public bool IsDead { get; set; } = false;
 
         public Rectangle CurrentHitbox
         {
             get
             {
                 var frameHitbox = _currentAnimation.GetCurrentHitbox();
-                return new Rectangle(
-                    (int)(Position.X + frameHitbox.X),
-                    (int)(Position.Y + frameHitbox.Y),
-                    frameHitbox.Width,
-                    frameHitbox.Height
-                );
+                 return new Rectangle(
+                     (int)(Position.X + frameHitbox.X),
+                     (int)(Position.Y + frameHitbox.Y),
+                     frameHitbox.Width,
+                     frameHitbox.Height
+                 );
             }
         }
 
@@ -54,9 +60,9 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _currentAnimation = _animations["idleRight"];
         }
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
-            if (_isHurt) return; // Prevent stacking damage during flicker
+            if (_isHurt || IsDead) return;
 
             Health.TakeDamage(damage);
             _isHurt = true;
@@ -66,6 +72,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             if (Health.IsDead)
             {
                 _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
+                IsDead = true;
             }
         }
 
@@ -78,6 +85,17 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public virtual void Update(GameTime gameTime, Vampire vampire)
         {
             _currentAnimation.Update(gameTime);
+
+            // Handle hurt flicker
+            if (_isHurt)
+            {
+                _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (_hurtTimer >= HurtDuration)
+                    _isHurt = false; 
+            }
+
+            // Update attack cooldown timer
+            _timeSinceLastAttack += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Placeholder AI: Hunters alternate between idle and moving randomly
             Random random = new Random();
@@ -93,13 +111,14 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
             float distance = Vector2.Distance(vampire.Position, this.Position);
 
-            if (distance < 55)
+            if (distance < 47)
             {
                 FaceVampire(vampire.Position);
 
-                if (CheckCollision(vampire.CurrentHitbox))
+                if (CheckCollision(vampire.CurrentHitbox) && _timeSinceLastAttack >= _attackCooldown)
                 {
-                    vampire.TakeDamage(1); // Hunters deal half a heart of damage
+                    vampire.TakeDamage(1);
+                    _timeSinceLastAttack = 0f;
                 }
             }
             else
@@ -155,19 +174,18 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            var destRectangle = new Rectangle(
-                (int)Position.X, (int)Position.Y,
-                UniformWidth, UniformHeight
-            );
-
-            spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
-        }
-
         public bool CheckCollision(Rectangle other)
         {
             return CurrentHitbox.Intersects(other);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            if (!_isHurt || ((int)(_hurtTimer * 10) % 2 == 0)) 
+            {
+                var destRectangle = new Rectangle((int)Position.X, (int)Position.Y, UniformWidth, UniformHeight);
+                spriteBatch.Draw(_currentAnimation.Texture, destRectangle, _currentAnimation.GetSourceRectangle(), Color.White);
+            }
         }
     }
 }
