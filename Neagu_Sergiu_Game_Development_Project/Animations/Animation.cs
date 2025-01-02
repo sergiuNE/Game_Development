@@ -45,7 +45,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Animations
 
         public Rectangle GetSourceRectangle()
         {
-            // Calculate the width of each frame (assuming frames are laid out horizontally in a single row)
+            // Calculate the width of each frame (frames are laid out horizontally in a single row)
             int frameWidth = Texture.Width / FrameCount;
             return new Rectangle(CurrentFrame * frameWidth, 0, frameWidth, Texture.Height);
         }

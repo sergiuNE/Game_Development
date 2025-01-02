@@ -66,8 +66,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         private const int HeartSpacing = 5;
 
         //Hunters
-        private List<Hunter> _hunters;
-        public static List<Hunter> Hunters = new List<Hunter>(); // Track all hunters
+        public List<Hunter> _hunters { get; private set; } = new List<Hunter>();
 
         //GameOverMenu
         public bool IsGameOver => _currentState == GameState.GameOver;
@@ -116,7 +115,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             blackTexture = new Texture2D(GraphicsDevice, 1, 1);
             blackTexture.SetData(new[] { Color.Black });
 
-            _vampire = new Vampire(new Vector2(350, 80),7);
+            _vampire = new Vampire(new Vector2(350, 80),7, this);
             _vampire.LoadContent(Content);
 
             // Hearts
@@ -214,7 +213,17 @@ namespace Neagu_Sergiu_Game_Development_Project
                     _hunters.Remove(hunter);
                 }
 
-                // Check for Game Over
+                // Check for Game Over for FinalBoss
+                var finalBoss = _hunters.Find(h => h is FinalBoss) as FinalBoss;
+                if (finalBoss != null && finalBoss.Health.IsDead && _currentState != GameState.GameOver)
+                {
+                    _currentState = GameState.GameOver;
+                    finalBoss.IsDead = true;
+                    gameOverMenu.ShowGameOverMenu();
+                    return; 
+                }
+
+                // Check for Game Over for Vampire
                 if (_currentHealth <= 0 && _currentState != GameState.GameOver)
                 {
                     _currentState = GameState.GameOver;
@@ -388,8 +397,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             else if (_currentState == GameState.GameOver)
             {
-                _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black); // Achtergrond zwart maken
-                _vampire.DrawDeathSprite(_spriteBatch); // Teken de doodsprite van de Vampire
+                _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black);
                 gameOverMenu.Draw(_spriteBatch);
             }
 

@@ -69,7 +69,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _hurtTimer = 0;
             _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
 
-            if (Health.IsDead)
+            if (Health.CurrentHealth <= 0)
             {
                 _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
                 IsDead = true;

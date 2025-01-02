@@ -22,14 +22,14 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         private bool canMove = true;
 
         public bool _isHurt { get; set; } = false;
-        private float _hurtTimer; // Timer for hurt flicker
+        private float _hurtTimer;                   // Timer for hurt flicker
         private const float HurtDuration = 0.5f;
 
         private float _deathTimer = 0f;
         private const float DeathAnimationDuration = 2f;
         public bool IsDead { get; set; }
 
-        public Game1 game1;
+        private Game1 game1 { get; set; }
 
         public Health Health { get; private set; }
         public Texture2D DeathTexture { get; set; }
@@ -48,12 +48,13 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
 
-        public Vampire(Vector2 initialPosition, int maxHealth)
+        public Vampire(Vector2 initialPosition, int maxHealth, Game1 game)
         {
             Position = initialPosition;
             PreviousPosition = initialPosition;
             _isFacingRight = true;
             Health = new Health(maxHealth);
+            game1 = game;
         }
 
         public void LoadContent(ContentManager content)
@@ -61,7 +62,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             var spriteFactory = new SpriteFactory(content);
             _animations = spriteFactory.LoadAnimations();
             _currentAnimation = _animations["idleRight"];
-            DeathTexture = content.Load<Texture2D>("vampire_die_left");
         }
 
         public void TakeDamage(int damage)
@@ -73,11 +73,10 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _hurtTimer = 0;
             _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
 
-            // Check if the vampire is dead
-            if (Health.IsDead)
+            // Is vampire dead:
+            if (Health.CurrentHealth <= 0)
             {
                 _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
-                //TriggerGameOver();
                 IsDead = true;
             }
         }
@@ -93,10 +92,11 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
             hunter.TakeDamage(1);
             _currentAnimation = _isFacingRight ? _animations["attackRight"] : _animations["attackLeft"];
+
             if (hunter.Health.IsDead)
             {
                 Health.AddHeart(1);
-                Game1.Hunters.Remove(hunter);
+                hunter.IsDead = true;
             }
         }
 
@@ -104,7 +104,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         {
             _currentAnimation.Update(gameTime);
 
-            // Handle hurt flicker
             if (_isHurt)
             {
                 _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -117,7 +116,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             {
                 if (_deathTimer == 0)
                 {
-                    // Start de doodsanimatie
                     ChangeState("Die");
                 }
 
@@ -135,14 +133,20 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 isAttacking = true;
-                foreach (var hunter in Game1.Hunters)
+
+                if (game1 != null && game1._hunters != null)
                 {
-                    if (CheckCollision(hunter.CurrentHitbox))
+                    for (int i = game1._hunters.Count - 1; i >= 0; i--)
                     {
-                        AttackHunter(hunter);
-                        if (hunter.Health.IsDead)
+                        var hunter = game1._hunters[i];
+                        if (CheckCollision(hunter.CurrentHitbox))
                         {
-                            game1.AddHeart(1); // Add a heart if hunter dies
+                            AttackHunter(hunter); 
+                            if (hunter.Health.IsDead)
+                            {
+                                game1._hunters.RemoveAt(i); 
+                                game1.AddHeart(1);         
+                            }
                         }
                     }
                 }
@@ -220,12 +224,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
                 _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
             }
         }
-
-        public void DrawDeathSprite(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(DeathTexture, Position, Color.White);
-        }
-
 
         public bool CheckCollision(Rectangle other)
         {

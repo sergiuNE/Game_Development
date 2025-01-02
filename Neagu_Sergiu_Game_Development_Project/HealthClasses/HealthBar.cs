@@ -14,9 +14,9 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
         private int _foregroundWidth;
         private int _foregroundHeight;
 
-        private int _foregroundOffsetX; // Offset voor foreground naar rechts
+        private int _foregroundOffsetX; 
 
-        private float _healthPercentage; // Tracks the current health as a percentage
+        private float _healthPercentage; 
 
         public HealthBar(Texture2D backgroundTexture, Texture2D foregroundTexture, Vector2 position, int backgroundWidth, int backgroundHeight, int foregroundWidth, int foregroundHeight, int foregroundOffsetX)
         {
@@ -27,8 +27,8 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
             _backgroundHeight = backgroundHeight;
             _foregroundWidth = foregroundWidth;
             _foregroundHeight = foregroundHeight;
-            _foregroundOffsetX = foregroundOffsetX; // Stel de horizontale offset in
-            _healthPercentage = 1.0f; // Default to 100% health
+            _foregroundOffsetX = foregroundOffsetX; // Horizontal offset 
+            _healthPercentage = 1.0f; // Default: 100% health
         }
 
         public void Update(int currentHealth, int maxHealth)
@@ -41,20 +41,18 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         public void Draw(SpriteBatch spriteBatch, int currentHealth, int maxHealth)
         {
-            // Teken de achtergrond
-            spriteBatch.Draw(
-                _backgroundTexture,
-                new Rectangle((int)Position.X, (int)Position.Y, _backgroundWidth, _backgroundHeight),
-                Color.White
-            );
-
             // Bereken de breedte van de foreground gebaseerd op de huidige gezondheid
             int healthBarWidth = (int)((currentHealth / (float)maxHealth) * _foregroundWidth);
 
             // Bereken de Y-offset zodat de foreground gecentreerd wordt binnen de achtergrond
             int verticalOffset = (_backgroundHeight - _foregroundHeight) / 2;
 
-            // Teken de foreground, met de extra offset naar rechts
+            spriteBatch.Draw(
+                _backgroundTexture,
+                new Rectangle((int)Position.X, (int)Position.Y, _backgroundWidth, _backgroundHeight),
+                Color.White
+            );
+
             spriteBatch.Draw(
                 _foregroundTexture,
                 new Rectangle(
