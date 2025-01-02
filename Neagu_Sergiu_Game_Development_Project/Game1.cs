@@ -41,7 +41,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         private Vector2 startPosition;
         private Vector2 exitPosition;
         private MouseState _previousMouseState; 
-        private GameState _currentState;
+        public GameState _currentState;
 
         //Vampire
         private Vampire _vampire;
@@ -110,7 +110,7 @@ namespace Neagu_Sergiu_Game_Development_Project
             gameName = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 400, _graphics.PreferredBackBufferHeight / 2 + 205);
 
             SpriteFont font = Content.Load<SpriteFont>("MenuFont");
-            gameOverMenu = new GameOverMenu(font, new Vector2(50, 150));
+            gameOverMenu = new GameOverMenu(font, new Vector2(50, 100));
 
             // Black texture for transitions
             blackTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -193,20 +193,20 @@ namespace Neagu_Sergiu_Game_Development_Project
                 // Damage to the vampire
                 if (_vampire._isHurt)
                 {
-                    RemoveHeart(1); 
+                    RemoveHeart(1);
                     _vampire._isHurt = false;
                 }
 
                 // Recover health when a Hunter is dead
                 var deadHunters = new List<Hunter>();
-                foreach (var hunter in _hunters)
-                {
-                    if (hunter.Health.IsDead)
-                    {
-                        AddHeart(1);
-                        deadHunters.Add(hunter);
-                    }
-                }
+                 foreach (var hunter in _hunters)
+                 {
+                     if (hunter.Health.IsDead)
+                     {
+                         AddHeart(1);
+                         deadHunters.Add(hunter);
+                     }
+                 }
 
                 // Delete dead Hunters
                 foreach (var hunter in deadHunters)
@@ -215,11 +215,14 @@ namespace Neagu_Sergiu_Game_Development_Project
                 }
 
                 // Check for Game Over
-                if (_currentHealth <= 0)
+                if (_currentHealth <= 0 && _currentState != GameState.GameOver)
                 {
                     _currentState = GameState.GameOver;
+                    _vampire.IsDead = true; 
                     gameOverMenu.ShowGameOverMenu();
+                    return; // Stop verdere updates
                 }
+
             }
             else if (_currentState == GameState.GameOver)
             {
@@ -270,7 +273,16 @@ namespace Neagu_Sergiu_Game_Development_Project
 
         public void RestartLevel()
         {
+            _currentHealth = 3;
+            UpdateHearts();
+
+            _currentState = GameState.StartScreen;
+       
+            _hunters.Clear();
+            _currentLevel = Level.Level1;
+
             Initialize();
+            LoadContent();
         }
 
         private bool IsMouseOverText(MouseState mouseState, Vector2 position, string text)
@@ -376,6 +388,8 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             else if (_currentState == GameState.GameOver)
             {
+                _spriteBatch.Draw(blackTexture, _backgroundRectangle, Color.Black); // Achtergrond zwart maken
+                _vampire.DrawDeathSprite(_spriteBatch); // Teken de doodsprite van de Vampire
                 gameOverMenu.Draw(_spriteBatch);
             }
 

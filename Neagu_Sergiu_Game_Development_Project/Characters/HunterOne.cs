@@ -17,10 +17,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
-            /*if (IsDead)
-            {
-
-            }*/
         }
 
         public override void Update(GameTime gameTime, Vampire vampire)

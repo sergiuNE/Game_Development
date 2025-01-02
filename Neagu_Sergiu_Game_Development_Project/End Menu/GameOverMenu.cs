@@ -47,8 +47,8 @@ namespace Neagu_Sergiu_Game_Development_Project.End_Menu
         {
             if (IsGameOver)
             {
-                spriteBatch.DrawString(_font, "               Game Over", _position, Color.Red);
-                spriteBatch.DrawString(_font, "Press Enter to Restart\nor Esc to Exit", _position + new Vector2(0, 50), Color.White);
+                spriteBatch.DrawString(_font, "              Game Over", _position, Color.Red);
+                spriteBatch.DrawString(_font, "Press Enter to Restart\n            or Esc to Exit", _position + new Vector2(0, 50), Color.White);
             }
         }
     }

@@ -23,15 +23,16 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
         public bool _isHurt { get; set; } = false;
         private float _hurtTimer; // Timer for hurt flicker
-        private const float HurtDuration = 0.5f; // Duration for flicker in seconds
+        private const float HurtDuration = 0.5f;
 
         private float _deathTimer = 0f;
-        private const float DeathAnimationDuration = 2f; // Stel de lengte van de doodsanimatie in seconden in
-        public bool IsDead { get; private set; }
+        private const float DeathAnimationDuration = 2f;
+        public bool IsDead { get; set; }
 
         public Game1 game1;
 
         public Health Health { get; private set; }
+        public Texture2D DeathTexture { get; set; }
 
         public Rectangle CurrentHitbox
         {
@@ -52,7 +53,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             Position = initialPosition;
             PreviousPosition = initialPosition;
             _isFacingRight = true;
-           Health = new Health(maxHealth);
+            Health = new Health(maxHealth);
         }
 
         public void LoadContent(ContentManager content)
@@ -60,6 +61,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             var spriteFactory = new SpriteFactory(content);
             _animations = spriteFactory.LoadAnimations();
             _currentAnimation = _animations["idleRight"];
+            DeathTexture = content.Load<Texture2D>("vampire_die_left");
         }
 
         public void TakeDamage(int damage)
@@ -80,6 +82,11 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
 
+        private void TriggerGameOver()
+        {
+            Game1.gameOverMenu.ShowGameOverMenu();
+        }
+
         public void AttackHunter(Hunter hunter)
         {
             if (hunter.IsDead) return;
@@ -89,13 +96,8 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             if (hunter.Health.IsDead)
             {
                 Health.AddHeart(1);
-                Game1.Hunters.Remove(hunter); //miss weg
+                Game1.Hunters.Remove(hunter);
             }
-        }
-
-        private void TriggerGameOver()
-        {
-            Game1.gameOverMenu.ShowGameOverMenu();
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, bool isAttacking, bool isJumping, bool isRunning)
@@ -113,7 +115,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             // Game logic for when vampire dies
             if (Health.IsDead)
             {
-                //TriggerGameOver();
                 if (_deathTimer == 0)
                 {
                     // Start de doodsanimatie
@@ -124,7 +125,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
                 if (_deathTimer >= DeathAnimationDuration)
                 {
-                    TriggerGameOver(); // Toon Game Over als de animatie klaar is
+                    TriggerGameOver(); 
                 }
 
                 return;
@@ -165,9 +166,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             if (keyboardState.IsKeyDown(Keys.Left)) _isFacingRight = false;
             if (keyboardState.IsKeyDown(Keys.Right)) _isFacingRight = true;
 
-            Move(keyboardState);
-
-           
+            Move(keyboardState);  
         }
 
         private void Move(KeyboardState keyboardState)
@@ -221,6 +220,12 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
                 _currentAnimation = _isFacingRight ? _animations["hurtRight"] : _animations["hurtLeft"];
             }
         }
+
+        public void DrawDeathSprite(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(DeathTexture, Position, Color.White);
+        }
+
 
         public bool CheckCollision(Rectangle other)
         {
