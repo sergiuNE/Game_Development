@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\healthclasses\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\healthclasses\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|c:\\users\\user1\\desktop\\neagu_sergiu_game_development_project\\neagu_sergiu_game_development_project\\characters\\finalboss.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{120317C2-3F77-420D-A04F-B48DFD54DF8B}|Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project.csproj|solutionrelative:neagu_sergiu_game_development_project\\characters\\finalboss.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -18,19 +22,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "HealthBar.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\HealthClasses\\HealthBar.cs",
+              "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\HealthClasses\\HealthBar.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\HealthClasses\\HealthBar.cs",
+              "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\HealthClasses\\HealthBar.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-02T23:21:04.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "FinalBoss.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Characters\\FinalBoss.cs",
               "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Characters\\FinalBoss.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Characters\\FinalBoss.cs",
               "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Characters\\FinalBoss.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAABmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-02T20:36:26.644Z",
+              "WhenOpened": "2025-01-02T23:08:05.504Z",
               "EditorCaption": ""
             },
             {
@@ -41,7 +58,7 @@
               "RelativeDocumentMoniker": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\Neagu_Sergiu_Game_Development_Project\\Neagu_Sergiu_Game_Development_Project\\Game1.cs",
               "RelativeToolTip": "Neagu_Sergiu_Game_Development_Project\\Game1.cs",
-              "ViewState": "AgIAANMAAAAAAAAAAADwvz8AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAN0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-02T19:14:41.278Z",
               "EditorCaption": ""

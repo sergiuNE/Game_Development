@@ -8,7 +8,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
     public class FinalBoss : Hunter
     {
         //Health
-        private Health _health;
         private HealthBar _healthBar;
         private Vector2 _healthBarOffset = new Vector2(0, -30);
         public Vector2 HealthBarPosition => Position + _healthBarOffset;
@@ -27,7 +26,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         {
             UniformWidth = 90;
             UniformHeight = 90;
-            _health = new Health(100);
+            Health = new Health(4);
         }
 
         public override void LoadContent(ContentManager content, string texturePath)
@@ -61,22 +60,32 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             // Update health bar
             _healthBar.Update(Health.CurrentHealth, Health.MaxHealth);
 
-            if (_health.CurrentHealth <= 0)
+            if (Health.CurrentHealth <= 0)
             {
+                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
                 _isDead = true;
                 _deathTimer = 0;
-                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
             }
         }
       
 
         public override void Update(GameTime gameTime, Vampire vampire)
         {
-            /*base.Update(gameTime, vampire);
+            base.Update(gameTime, vampire);
 
-            // Game logic for when vampire dies
-           
-            if (_health.IsDead)
+            if (_isHurt)
+            {
+                _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (_hurtTimer >= HurtDuration)
+                {
+                    _isHurt = false;
+                }
+            }
+
+            // Game logic for when finalboss dies
+
+            if (Health.IsDead)
             {
                 _deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -88,48 +97,8 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
                 return;
             }
 
-            // Update hurt timer
-            if (_isHurt)
-            {
-                _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (_hurtTimer >= HurtDuration)
-                {
-                    _isHurt = false;
-                }
-            }
-
-            // Update health bar position
             _healthBar.Position = HealthBarPosition;
-            _healthBar.Update(_health.CurrentHealth, _health.MaxHealth);*/
-            base.Update(gameTime, vampire);
-
-            if (_isDead)
-            {
-                _deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                return; // Stop verdere updates
-            }
-
-            if (_health.IsDead && !_isDead)
-            {
-                _isDead = true;
-                _deathTimer = 0;
-                _currentAnimation = _isFacingRight ? _animations["dieRight"] : _animations["dieLeft"];
-                TriggerGameOver();
-            }
-
-            if (_isHurt)
-            {
-                _hurtTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (_hurtTimer >= HurtDuration)
-                {
-                    _isHurt = false;
-                }
-            }
-
-            _healthBar.Position = HealthBarPosition;
-            _healthBar.Update(_health.CurrentHealth, _health.MaxHealth);
+            _healthBar.Update(Health.CurrentHealth, Health.MaxHealth);
         }
 
         private void TriggerGameOver()
@@ -141,10 +110,9 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         {
             base.Draw(spriteBatch);
 
-            //_healthBar.Draw(spriteBatch, _health.CurrentHealth, _health.MaxHealth);
             if (!_isDead)
             {
-                _healthBar.Draw(spriteBatch, _health.CurrentHealth, _health.MaxHealth);
+                _healthBar.Draw(spriteBatch, Health.CurrentHealth, Health.MaxHealth);
             }
         }
     }

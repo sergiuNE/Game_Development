@@ -16,7 +16,7 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         private int _foregroundOffsetX; 
 
-        private float _healthPercentage; 
+        public float _healthPercentage; 
 
         public HealthBar(Texture2D backgroundTexture, Texture2D foregroundTexture, Vector2 position, int backgroundWidth, int backgroundHeight, int foregroundWidth, int foregroundHeight, int foregroundOffsetX)
         {

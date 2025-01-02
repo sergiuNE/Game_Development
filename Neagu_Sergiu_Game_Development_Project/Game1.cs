@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
 using Neagu_Sergiu_Game_Development_Project.End_Menu;
+using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 using Neagu_Sergiu_Game_Development_Project.Hearts;
 using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
@@ -66,11 +67,15 @@ namespace Neagu_Sergiu_Game_Development_Project
         private const int HeartSpacing = 5;
 
         //Hunters
-        public List<Hunter> _hunters { get; private set; } = new List<Hunter>();
+        public List<Hunter> _hunters { get; private set; }// = new List<Hunter>();
 
         //GameOverMenu
         public bool IsGameOver => _currentState == GameState.GameOver;
         public static GameOverMenu gameOverMenu;
+
+
+
+        private HealthBar healthBar { get; set; }
 
         public Game1()
         {
@@ -213,15 +218,15 @@ namespace Neagu_Sergiu_Game_Development_Project
                     _hunters.Remove(hunter);
                 }
 
-                // Check for Game Over for FinalBoss
-                var finalBoss = _hunters.Find(h => h is FinalBoss) as FinalBoss;
-                if (finalBoss != null && finalBoss.Health.IsDead && _currentState != GameState.GameOver)
+                // Check for Game Over for FinalBoss -> or check if the healthbar is empty
+                /*var finalBoss = _hunters.Find(h => h is FinalBoss) as FinalBoss;
+                if (finalBoss.Health.IsDead && _currentState != GameState.GameOver)
                 {
                     _currentState = GameState.GameOver;
                     finalBoss.IsDead = true;
                     gameOverMenu.ShowGameOverMenu();
                     return; 
-                }
+                }*/
 
                 // Check for Game Over for Vampire
                 if (_currentHealth <= 0 && _currentState != GameState.GameOver)
