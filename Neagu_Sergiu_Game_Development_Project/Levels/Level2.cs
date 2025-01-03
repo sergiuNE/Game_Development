@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Neagu_Sergiu_Game_Development_Project.Characters; 
 
-namespace Neagu_Sergiu_Game_Development_Project.Levels
+namespace Neagu_Sergiu_Game_Development_Project.Levels 
 {
     public class Level2 : LevelBase
     {

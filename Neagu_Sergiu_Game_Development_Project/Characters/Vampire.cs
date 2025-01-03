@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
 using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 
-namespace Neagu_Sergiu_Game_Development_Project.Characters
+namespace Neagu_Sergiu_Game_Development_Project.Characters 
 {
     public class Vampire
     {

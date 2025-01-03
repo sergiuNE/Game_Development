@@ -11,7 +11,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
         public override void LoadContent(ContentManager content, string texturePath)
         {
-            base.LoadContent(content, "HunterThree");
+            base.LoadContent(content, "HunterThree"); 
         }
 
         public override void TakeDamage(int damage)

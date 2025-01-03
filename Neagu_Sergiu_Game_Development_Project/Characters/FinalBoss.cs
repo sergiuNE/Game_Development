@@ -8,11 +8,11 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
     public class FinalBoss : Hunter
     {
         //Health
-        private HealthBar _healthBar;
+        public HealthBar _healthBar;
         private Vector2 _healthBarOffset = new Vector2(0, -30);
         public Vector2 HealthBarPosition => Position + _healthBarOffset;
 
-        // Death animation
+        //Death animation
         private bool _isDead { get; set; } = false;
         private float _deathTimer;
         private const float DeathAnimationDuration = 2f;
@@ -57,7 +57,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             _isHurt = true;
             _hurtTimer = 0;
 
-            // Update health bar
             _healthBar.Update(Health.CurrentHealth, Health.MaxHealth);
 
             if (Health.CurrentHealth <= 0)
@@ -68,7 +67,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             }
         }
       
-
         public override void Update(GameTime gameTime, Vampire vampire)
         {
             base.Update(gameTime, vampire);
@@ -83,15 +81,17 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
                 }
             }
 
-            // Game logic for when finalboss dies
-
-            if (Health.IsDead)
+            if (Health.CurrentHealth <= 0) 
             {
+                if (_deathTimer == 0)
+                {
+                    ChangeState("Die");
+                }
                 _deathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (_deathTimer >= DeathAnimationDuration)
                 {
-                    TriggerGameOver();
+                  TriggerGameOver();
                 }
 
                 return;

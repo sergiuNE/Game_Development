@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
 {
-    public class SpriteFactory //Factory Design
+    public class SpriteFactory //Factory Design Pattern
     {
         private ContentManager _content;
 
@@ -73,7 +73,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
             new Rectangle(12, 12, 38, 48)
         };
 
-            // Load animations based on hunter type
+            // Animations based on hunter type
             if (hunterType == "HunterOne")
             {
                 animations["idleLeft"] = LoadAnimation("hunter_one_idle_left", new List<Rectangle> { new Rectangle(10, 10, 40, 50) }, 1);

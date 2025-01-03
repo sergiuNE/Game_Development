@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Neagu_Sergiu_Game_Development_Project.Screen
 {
-    public class ScreenFade
+    public class ScreenFade //(Interface Segregation Principle - ISP)
     {
         private float _opacity;
         private bool _isFadingIn;

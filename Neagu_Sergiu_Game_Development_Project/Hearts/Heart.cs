@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Neagu_Sergiu_Game_Development_Project.Hearts
 {
-    public class Heart //Single Responsibility Principle -> Één klasse = één verantwoordelijkheid 
+    public class Heart //Single Responsibility Principle (SRP) -> One class = one responsibility 
     {
         public enum HeartState
         {

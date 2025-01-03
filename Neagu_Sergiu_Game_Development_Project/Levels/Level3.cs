@@ -6,7 +6,7 @@ using Neagu_Sergiu_Game_Development_Project.Characters;
 
 namespace Neagu_Sergiu_Game_Development_Project.Levels
 {
-    public class Level3 : LevelBase
+    public class Level3 : LevelBase 
     {
         public Level3(GraphicsDevice graphicsDevice, ContentManager content, Vampire vampire, List<Hunter> finalBoss)
             : base(graphicsDevice, content, vampire, finalBoss)

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
+namespace Neagu_Sergiu_Game_Development_Project.HealthClasses 
 {
     public class Health
     {

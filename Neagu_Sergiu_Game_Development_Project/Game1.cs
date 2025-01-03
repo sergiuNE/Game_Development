@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Media;
 using Neagu_Sergiu_Game_Development_Project.Characters;
 using Neagu_Sergiu_Game_Development_Project.Design_Patterns;
 using Neagu_Sergiu_Game_Development_Project.End_Menu;
-using Neagu_Sergiu_Game_Development_Project.HealthClasses;
 using Neagu_Sergiu_Game_Development_Project.Hearts;
 using Neagu_Sergiu_Game_Development_Project.Levels;
 using System;
@@ -34,14 +33,20 @@ namespace Neagu_Sergiu_Game_Development_Project
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D background;
+        private Rectangle _backgroundRectangle;
+
+        //Fonts
         private SpriteFont _font;
         private SpriteFont _fontNameGame;
-        private Rectangle _backgroundRectangle;
 
         private Vector2 gameName;
         private Vector2 startPosition;
         private Vector2 exitPosition;
+
+        //MouseState
         private MouseState _previousMouseState; 
+
+        //GameState
         public GameState _currentState;
 
         //Vampire
@@ -67,15 +72,14 @@ namespace Neagu_Sergiu_Game_Development_Project
         private const int HeartSpacing = 5;
 
         //Hunters
-        public List<Hunter> _hunters { get; private set; }// = new List<Hunter>();
+        public List<Hunter> _hunters { get; private set; }
+
+        //FinalBoss
+        private FinalBoss _finalBoss;
 
         //GameOverMenu
         public bool IsGameOver => _currentState == GameState.GameOver;
         public static GameOverMenu gameOverMenu;
-
-
-
-        private HealthBar healthBar { get; set; }
 
         public Game1()
         {
@@ -90,7 +94,6 @@ namespace Neagu_Sergiu_Game_Development_Project
             //_graphics.IsFullScreen = true;
             //_graphics.ApplyChanges();
             _currentState = GameState.StartScreen;
-
             base.Initialize();
         }
 
@@ -181,7 +184,7 @@ namespace Neagu_Sergiu_Game_Development_Project
 
                 _currentLevelClass.CheckCollision();
 
-                // Controleer of de vampire van level verandert
+                // Check if the vampire changes levels
                 if (_vampire.Position.X <= 0 && _currentLevel != Level.Level2)
                 {
                     LoadLevel2();
@@ -209,7 +212,7 @@ namespace Neagu_Sergiu_Game_Development_Project
                      {
                          AddHeart(1);
                          deadHunters.Add(hunter);
-                     }
+                    }
                  }
 
                 // Delete dead Hunters
@@ -218,15 +221,22 @@ namespace Neagu_Sergiu_Game_Development_Project
                     _hunters.Remove(hunter);
                 }
 
-                // Check for Game Over for FinalBoss -> or check if the healthbar is empty
-                /*var finalBoss = _hunters.Find(h => h is FinalBoss) as FinalBoss;
-                if (finalBoss.Health.IsDead && _currentState != GameState.GameOver)
+                //FinalBoss check
+                if (_finalBoss != null)
                 {
-                    _currentState = GameState.GameOver;
-                    finalBoss.IsDead = true;
-                    gameOverMenu.ShowGameOverMenu();
-                    return; 
-                }*/
+                   
+                    if (_finalBoss.Health.IsDead)
+                    {
+                        if (_currentState != GameState.GameOver)
+                        {
+                            _currentState = GameState.GameOver;
+                            gameOverMenu.ShowGameOverMenu();
+                        }
+
+                        _finalBoss = null;
+                        return;
+                    }
+                }
 
                 // Check for Game Over for Vampire
                 if (_currentHealth <= 0 && _currentState != GameState.GameOver)
@@ -234,7 +244,7 @@ namespace Neagu_Sergiu_Game_Development_Project
                     _currentState = GameState.GameOver;
                     _vampire.IsDead = true; 
                     gameOverMenu.ShowGameOverMenu();
-                    return; // Stop verdere updates
+                    return; // Stop further updatess
                 }
 
             }
@@ -246,7 +256,6 @@ namespace Neagu_Sergiu_Game_Development_Project
             _previousMouseState = mouseState;
             base.Update(gameTime);
         }
-
 
         private void UpdateHearts()
         {
@@ -359,7 +368,10 @@ namespace Neagu_Sergiu_Game_Development_Project
 
             _hunters.Clear();
             Vector2 positionFinalBoss = new Vector2(90, 90);
-            _hunters.Add(HunterFactory.CreateHunter(HunterType.FinalBossHunter, positionFinalBoss));
+
+            _finalBoss = HunterFactory.CreateHunter(HunterType.FinalBossHunter, positionFinalBoss) as FinalBoss;
+            _hunters.Add(_finalBoss);
+
             foreach (var hunter in _hunters)
             {
                 hunter.LoadContent(Content, hunter.GetType().Name);

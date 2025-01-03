@@ -14,7 +14,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             base.LoadContent(content, "HunterTwo");
         }
 
-        public override void TakeDamage(int damage)
+        public override void TakeDamage(int damage) 
         {
             base.TakeDamage(damage);
         }

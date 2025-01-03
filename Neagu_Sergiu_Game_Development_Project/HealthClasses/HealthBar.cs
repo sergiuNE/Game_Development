@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 {
-    public class HealthBar
+    public class HealthBar //Liskov Substitution Principle (LSP)
     {
         private Texture2D _backgroundTexture;
         private Texture2D _foregroundTexture;
@@ -33,7 +33,7 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         public void Update(int currentHealth, int maxHealth)
         {
-            // Calculate the current health percentage
+            // Calculate: current health percentage
             _healthPercentage = currentHealth / (float)maxHealth;
             // Ensure it remains within 0 and 1 bounds
             _healthPercentage = MathHelper.Clamp(_healthPercentage, 0.0f, 1.0f);
@@ -41,10 +41,9 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 
         public void Draw(SpriteBatch spriteBatch, int currentHealth, int maxHealth)
         {
-            // Bereken de breedte van de foreground gebaseerd op de huidige gezondheid
             int healthBarWidth = (int)((currentHealth / (float)maxHealth) * _foregroundWidth);
 
-            // Bereken de Y-offset zodat de foreground gecentreerd wordt binnen de achtergrond
+            // Calculate the Y offset so that the foreground is centered within the background
             int verticalOffset = (_backgroundHeight - _foregroundHeight) / 2;
 
             spriteBatch.Draw(
@@ -56,10 +55,10 @@ namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
             spriteBatch.Draw(
                 _foregroundTexture,
                 new Rectangle(
-                    (int)Position.X + _foregroundOffsetX,        // Voeg de horizontale offset toe
-                    (int)Position.Y + verticalOffset,            // Verticaal gecentreerd
-                    healthBarWidth,                              // Dynamische breedte gebaseerd op gezondheid
-                    _foregroundHeight                            // Vastgestelde hoogte van de foreground
+                    (int)Position.X + _foregroundOffsetX,        // Add the horizontal offset
+                    (int)Position.Y + verticalOffset,            // Vertically centered
+                    healthBarWidth,                              // Dynamic width based on health
+                    _foregroundHeight                            // Fixed height of foreground
                 ),
                 Color.Red
             );

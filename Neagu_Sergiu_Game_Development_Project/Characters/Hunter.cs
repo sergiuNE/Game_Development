@@ -29,7 +29,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         private bool _isHurt; 
         private float _hurtTimer; 
         private const float HurtDuration = 0.5f;
-        public bool IsDead { get; set; } = false;
+        public bool IsDead { get; set; } = false; 
 
         public Rectangle CurrentHitbox
         {

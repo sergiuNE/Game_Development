@@ -30,7 +30,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Levels
         }
         protected override void HandleVampireHunterCollision()
         {
-            // Custom collision logic for Level1
+            // Custom collision for Level1
             _vampire.Position = _vampire.PreviousPosition;
         }
     }

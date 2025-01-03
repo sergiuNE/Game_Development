@@ -24,7 +24,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             base.Update(gameTime, vampire);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch) 
         {
             base.Draw(spriteBatch);
         }

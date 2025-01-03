@@ -27,7 +27,7 @@ public abstract class LevelBase
 
     public virtual void LoadContent()
     {
-        // This is overwritten in the subclasses
+        // Overwritten in the subclasses
     }
 
     public Texture2D GetCastleTexture()

@@ -12,7 +12,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
         FinalBossHunter
     }
 
-    public static class HunterFactory
+    public static class HunterFactory //Factory Design Pattern
     {
         public static Hunter CreateHunter(HunterType type, Vector2 position)
         {

@@ -2,12 +2,12 @@
 
 namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
 {
-    public class BackgroundMusicManager //SingletonFactory
+    public class BackgroundMusicManager //Singleton Design Pattern
     {
         private static BackgroundMusicManager _instance;
         private Song _currentSong;
 
-        private BackgroundMusicManager() { }
+        private BackgroundMusicManager() {}
 
         public static BackgroundMusicManager Instance
         {
@@ -28,12 +28,6 @@ namespace Neagu_Sergiu_Game_Development_Project.Design_Patterns
                 MediaPlayer.IsRepeating = isLooping;
                 _currentSong = song;
             }
-        }
-
-        public void Stop()
-        {
-            MediaPlayer.Stop();
-            _currentSong = null;
         }
     }
 }

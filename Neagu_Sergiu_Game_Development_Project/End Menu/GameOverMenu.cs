@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Neagu_Sergiu_Game_Development_Project.End_Menu
 {
-    public class GameOverMenu
+    public class GameOverMenu //Dependency Inversion Principle (DIP)
     {
         private SpriteFont _font;
         private Vector2 _position;
