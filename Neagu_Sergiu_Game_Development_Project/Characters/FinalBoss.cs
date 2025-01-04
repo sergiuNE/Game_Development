@@ -103,7 +103,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 
         private void TriggerGameOver()
         {
-            Game1.gameOverMenu.ShowGameOverMenu();
+            Game1.gameOverMenu.ShowGameOverMenuFinalBoss();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

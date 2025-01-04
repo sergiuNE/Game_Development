@@ -230,7 +230,7 @@ namespace Neagu_Sergiu_Game_Development_Project
                         if (_currentState != GameState.GameOver)
                         {
                             _currentState = GameState.GameOver;
-                            gameOverMenu.ShowGameOverMenu();
+                            gameOverMenu.ShowGameOverMenuFinalBoss();
                         }
 
                         _finalBoss = null;
@@ -244,7 +244,7 @@ namespace Neagu_Sergiu_Game_Development_Project
                     _currentState = GameState.GameOver;
                     _vampire.IsDead = true; 
                     gameOverMenu.ShowGameOverMenu();
-                    return; // Stop further updatess
+                    return; // Stop further updates
                 }
 
             }
