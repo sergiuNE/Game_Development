@@ -159,7 +159,10 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
             else if (isJumping)
                 ChangeState("Jump");
             else if (isRunning)
+            {
                 ChangeState("Run");
+                _speed = 3.5f;
+            }
             else if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.Right))
                 ChangeState("Walk");
             else if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.Down))

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Neagu_Sergiu_Game_Development_Project.HealthClasses
 {
     public class HealthBar //Liskov Substitution Principle (LSP)
-    {
+    { 
         private Texture2D _backgroundTexture;
         private Texture2D _foregroundTexture;
         public Vector2 Position { get; set; }

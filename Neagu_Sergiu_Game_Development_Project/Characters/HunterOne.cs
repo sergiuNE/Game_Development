@@ -9,7 +9,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
         public HunterOne(Vector2 initialPosition) : base(initialPosition, 2f, 2)
         {}
 
-        public override void LoadContent(ContentManager content, string texturePath)
+        public override void LoadContent(ContentManager content, string texturePath) 
         {
             base.LoadContent(content, "HunterOne");
         }

@@ -11,7 +11,7 @@ namespace Neagu_Sergiu_Game_Development_Project.Characters
 {
     public abstract class Hunter
     {
-        protected Dictionary<string, Animation> _animations;
+        protected Dictionary<string, Animation> _animations; 
         protected Animation _currentAnimation;
         public Vector2 Position { get;  set; }
         protected bool _isFacingRight;

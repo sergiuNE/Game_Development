@@ -3,7 +3,7 @@
 namespace Neagu_Sergiu_Game_Development_Project.HealthClasses 
 {
     public class Health
-    {
+    { 
         public int MaxHealth { get; private set; }
         public int CurrentHealth { get; set; }
         public bool IsDead => CurrentHealth <= 0;

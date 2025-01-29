@@ -40,7 +40,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         private SpriteFont _fontNameGame;
 
         private Vector2 gameName;
-        private Vector2 startPosition;
+        private Vector2 startPosition; 
         private Vector2 exitPosition;
 
         //MouseState
@@ -67,7 +67,7 @@ namespace Neagu_Sergiu_Game_Development_Project
         //Hearts
         private List<Heart> _hearts; // For the UI
         private const int MaxHealth = 7;
-        private static int _currentHealth = 3;
+        private static int _currentHealth = 6;
         private const float HeartScale = 0.6f;
         private const int HeartSpacing = 5;
 
